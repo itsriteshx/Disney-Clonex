@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const dummyMovies = [
   { id: 1, title: "Movie 1", img: "https://picsum.photos/200/300?random=11" },
@@ -12,6 +13,8 @@ const dummyMovies = [
 ];
 
 function MovieRow({ title }) {
+  const navigate = useNavigate();
+
   return (
     <div style={{ padding: "0 40px", marginBottom: "30px" }}>
       <h3 style={{ color: "#f9f9f9", marginBottom: "15px", textAlign: "left" }}>
@@ -31,6 +34,7 @@ function MovieRow({ title }) {
         {dummyMovies.map((movie) => (
           <div
             key={movie.id}
+            onClick={() => navigate(`/detail/${movie.id}`)}
             style={{
               minWidth: "180px",
               cursor: "pointer",
