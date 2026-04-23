@@ -1,13 +1,12 @@
 import React from "react";
 import Header from "../components/Header";
+import ImageSlider from "../components/ImageSlider";
 
 function Home() {
   return (
-    <div>
+    <div style={{ background: "#040714", minHeight: "100vh" }}>
       <Header />
-      <h1 style={{ color: "white" }}>
-        Welcome to Disney Clone
-      </h1>
+      <ImageSlider />
     </div>
   );
 }
