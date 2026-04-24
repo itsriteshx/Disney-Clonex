@@ -1,106 +1,61 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 function Detail() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   return (
-    <div style={{ background: "#040714", minHeight: "100vh", color: "white" }}>
-      <Header />
-      <div
-        style={{
-          position: "relative",
-          minHeight: "calc(100vh - 70px)",
-          padding: "0 calc(3.5vw + 5px)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: -1,
-            opacity: 0.8,
-          }}
-        >
-          <img
-            src={`https://picsum.photos/1920/1080?random=${id}`}
-            alt="background"
-            style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+    <div className="bg-brand-dark min-h-screen relative overflow-hidden flex">
+      <Sidebar />
+      <div className="flex-1 ml-20">
+        <Header />
+        
+        {/* Cinematic Background */}
+        <div className="fixed top-0 right-0 w-[85vw] h-screen -z-0">
+          <img 
+            src={`https://picsum.photos/1920/1080?random=${id}`} 
+            alt="bg" 
+            className="w-full h-full object-cover opacity-60" 
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent" />
         </div>
 
-        <div style={{ maxWidth: "600px" }}>
-          <h1 style={{ fontSize: "60px", marginBottom: "20px" }}>Movie Title {id}</h1>
-          <div style={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
-            <button
-              style={{
-                padding: "0 24px",
-                height: "56px",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "white",
-                color: "black",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "15px",
-                fontWeight: "bold",
-                letterSpacing: "1.8px",
-              }}
-            >
-              PLAY
-            </button>
-            <button
-              style={{
-                padding: "0 24px",
-                height: "56px",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "rgba(0,0,0,0.3)",
-                color: "white",
-                border: "1px solid white",
-                cursor: "pointer",
-                fontSize: "15px",
-                fontWeight: "bold",
-                letterSpacing: "1.8px",
-              }}
-            >
-              TRAILER
-            </button>
-            <div
-              style={{
-                width: "44px",
-                height: "44px",
-                borderRadius: "50%",
-                border: "2px solid white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "rgba(0,0,0,0.6)",
-                cursor: "pointer",
-                fontSize: "30px",
-              }}
-            >
-              +
+        {/* Cinematic Content */}
+        <div className="relative z-10 px-16 py-24 max-w-4xl">
+          <div className="animate-in fade-in slide-in-from-left duration-1000">
+            <h1 className="text-7xl font-extrabold mb-4 tracking-tighter drop-shadow-2xl uppercase">
+              MOVIE TITLE {id}
+            </h1>
+            <div className="flex items-center gap-4 mb-8 text-white/60 font-semibold tracking-wide">
+              <span className="bg-white/10 px-2 py-0.5 rounded text-xs">U/A 13+</span>
+              <span>2024</span>
+              <span>•</span>
+              <span>2h 15m</span>
+              <span>•</span>
+              <span className="text-brand-blue">Action, Fantasy</span>
+            </div>
+            
+            <p className="text-xl leading-relaxed text-white/80 mb-10 max-w-2xl drop-shadow-md">
+              Experience the breathtaking journey of our heroes as they embark on an odyssey 
+              across mystical lands. A visual masterpiece that redefines modern cinema with 
+              stunning effects and a gripping narrative.
+            </p>
+
+            <div className="flex items-center gap-4">
+              <button className="bg-white text-black px-12 py-4 rounded-xl font-black text-lg hover:scale-105 transition-all shadow-2xl shadow-white/10">
+                WATCH NOW
+              </button>
+              <button className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-xl hover:bg-white/20 transition-all text-2xl">
+                ➕
+              </button>
+              <button className="bg-white/10 backdrop-blur-xl border border-white/20 p-4 rounded-xl hover:bg-white/20 transition-all text-2xl">
+                🔗
+              </button>
             </div>
           </div>
-          <p style={{ color: "rgba(249, 249, 249, 0.8)", fontSize: "15px", marginBottom: "20px" }}>
-            2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure
-          </p>
-          <p style={{ fontSize: "20px", lineHeight: "1.4", color: "#f9f9f9" }}>
-            This is a dummy description for the movie with ID {id}. A young girl named Raya travels to the kingdom of Kumandra to find the last dragon and save her world from a dark force.
-          </p>
         </div>
       </div>
     </div>

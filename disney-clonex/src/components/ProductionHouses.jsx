@@ -1,53 +1,33 @@
 import React from "react";
-
-const houses = [
-  { id: 1, name: "Disney" },
-  { id: 2, name: "Pixar" },
-  { id: 3, name: "Marvel" },
-  { id: 4, name: "Star Wars" },
-  { id: 5, name: "National Geographic" },
-];
+import { brands } from "../data/movies";
+import { useAppContext } from "../context/AppContext";
 
 function ProductionHouses() {
+  const { activeBrand, setActiveBrand } = useAppContext();
+
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "20px",
-        padding: "20px 40px",
-        justifyContent: "space-between",
-      }}
-    >
-      {houses.map((house) => (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
+      {brands.map((brand) => (
         <div
-          key={house.id}
-          style={{
-            flex: 1,
-            height: "100px",
-            border: "2px solid rgba(249, 249, 249, 0.1)",
-            borderRadius: "10px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            background: "rgba(249, 249, 249, 0.05)",
-            boxShadow: "rgb(0 0 0 / 69%) 0px 26px 30px -10px, rgb(0 0 0 / 73%) 0px 16px 10px -10px",
-            transition: "all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s",
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = "scale(1.05)";
-            e.currentTarget.style.borderColor = "rgba(249, 249, 249, 0.8)";
-            e.currentTarget.style.background = "rgba(249, 249, 249, 0.1)";
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
-            e.currentTarget.style.borderColor = "rgba(249, 249, 249, 0.1)";
-            e.currentTarget.style.background = "rgba(249, 249, 249, 0.05)";
-          }}
+          key={brand.id}
+          onClick={() => setActiveBrand(activeBrand === brand.id ? 'all' : brand.id)}
+          className={`relative h-40 border-2 rounded-2xl flex items-center justify-center cursor-pointer transition-all duration-500 overflow-hidden group ${
+            activeBrand === brand.id 
+              ? "border-brand-blue bg-white/10 shadow-[0_0_40px_rgba(22,104,220,0.3)] scale-105" 
+              : "border-white/10 bg-gradient-to-b from-white/5 to-transparent hover:scale-105 hover:border-white/30"
+          }`}
         >
-          <h4 style={{ color: "#f9f9f9", margin: 0, fontSize: "16px", textAlign: "center" }}>
-            {house.name}
-          </h4>
+          <img 
+            src={brand.logo} 
+            alt={brand.name} 
+            className="w-3/4 h-3/4 object-contain z-10 group-hover:scale-110 transition-transform duration-500"
+          />
+          
+          {/* Video hover effect placeholder or just glow */}
+          <div className={`absolute inset-0 bg-gradient-to-t from-brand-blue/20 to-transparent transition-opacity duration-500 ${activeBrand === brand.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+          
+          {/* Subtle glow border */}
+          <div className="absolute inset-0 border border-white/5 rounded-2xl group-hover:border-white/20 transition-all" />
         </div>
       ))}
     </div>

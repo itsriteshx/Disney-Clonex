@@ -1,67 +1,54 @@
 import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useAppContext } from "../context/AppContext";
 
 function Header() {
+  const { searchQuery, setSearchQuery } = useAppContext();
+  const location = useLocation();
+  const isSearchActive = new URLSearchParams(location.search).get('search') === 'true';
+
   const navItems = [
-    { title: "HOME", icon: "🏠" },
-    { title: "SEARCH", icon: "🔍" },
-    { title: "WATCHLIST", icon: "➕" },
-    { title: "ORIGINALS", icon: "⭐" },
-    { title: "MOVIES", icon: "🎬" },
-    { title: "SERIES", icon: "📺" },
+    { title: "TV", icon: "📺", path: "/home?type=tv" },
+    { title: "Movies", icon: "🎬", path: "/home?type=movie" },
+    { title: "Sports", icon: "⚽", path: "/home?type=sports" },
+    { title: "Originals", icon: "⭐", path: "/home?type=originals" },
   ];
 
   return (
-    <header
-      style={{
-        background: "#090b13",
-        height: "70px",
-        display: "flex",
-        alignItems: "center",
-        padding: "0 36px",
-        justifyContent: "space-between",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: "40px" }}>
-        <h2 style={{ color: "white", margin: 0, fontSize: "24px", letterSpacing: "1.5px" }}>
-          DISNEY+
-        </h2>
-        <nav style={{ display: "flex", gap: "25px" }}>
+    <header className="sticky top-0 h-20 flex items-center px-10 justify-between z-[1000] backdrop-blur-md bg-brand-dark/80">
+      <div className="flex items-center gap-12">
+        <Link to="/home" className="text-white text-3xl font-bold tracking-tight cursor-pointer">
+          Disney+ <span className="text-brand-gold italic">hotstar</span>
+        </Link>
+        <nav className="hidden lg:flex gap-8">
           {navItems.map((item) => (
-            <div
+            <Link
               key={item.title}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                cursor: "pointer",
-                padding: "0 10px",
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "2px solid white")}
-              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+              to={item.path}
+              className="text-white/70 hover:text-white text-base font-bold uppercase tracking-widest cursor-pointer transition-all duration-300 relative group"
             >
-              <span style={{ fontSize: "14px" }}>{item.icon}</span>
-              <span
-                style={{
-                  color: "white",
-                  fontSize: "13px",
-                  letterSpacing: "1.42px",
-                  fontWeight: "bold",
-                }}
-              >
-                {item.title}
-              </span>
-            </div>
+              {item.title}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-blue group-hover:w-full transition-all duration-300"></span>
+            </Link>
           ))}
         </nav>
       </div>
-      <img
-        src="https://picsum.photos/40/40?random=102"
-        alt="user"
-        style={{ borderRadius: "50%", cursor: "pointer", border: "1px solid rgba(255,255,255,0.2)" }}
-      />
+
+      <div className="flex items-center gap-8">
+        <div className={`relative flex items-center transition-all duration-500 ${isSearchActive ? 'w-80' : 'w-48'}`}>
+          <input
+            type="text"
+            placeholder="Search movies, shows and more"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-white/5 border-b border-white/10 px-10 py-2.5 rounded-lg text-white outline-none focus:border-brand-blue transition-all duration-300 w-full text-sm placeholder:text-white/30"
+          />
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">🔍</span>
+        </div>
+        <button className="bg-brand-blue hover:scale-105 active:scale-95 text-white px-6 py-2.5 rounded-lg font-bold text-xs tracking-widest transition-all shadow-lg shadow-brand-blue/20">
+          SUBSCRIBE
+        </button>
+      </div>
     </header>
   );
 }
