@@ -1,11 +1,14 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
 @theme {
-  --color-brand-dark: #0a0a0f;
-  --color-brand-navy: #0f1729;
-  --color-brand-blue: #1668dc;
-  --color-brand-gold: #f5c518;
-  --font-heading: "Bebas Neue", cursive;
+  --color-brand-dark: #0d0117;
+  --color-nav-bg: rgba(13, 1, 23, 0.95);
+  --color-brand-purple: #8B2FC9;
+  --color-brand-purple-dark: #4A0E8F;
+  --color-brand-gold: #f5a623;
+  --color-text-gray: #aaaaaa;
+  --font-heading: "Nunito", sans-serif;
   --font-body: "Nunito", sans-serif;
 }
 
@@ -13,9 +16,16 @@
   body {
     @apply bg-brand-dark text-white font-[family-name:--font-body];
     margin: 0;
+    overflow-x: hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-[family-name:--font-heading];
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-[family-name:--font-heading] font-extrabold;
   }
 }
 
@@ -23,26 +33,81 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 
+  .pill-btn {
+    @apply px-9 py-3.5 rounded-full font-extrabold text-base cursor-pointer transition-all duration-300 border-none flex items-center gap-2.5;
+  }
+
+  .subscribe-btn {
+    @apply px-6 py-2 rounded-md font-extrabold text-xs tracking-widest transition-all duration-300 text-white shadow-lg uppercase;
+    background: linear-gradient(135deg, #8B2FC9, #4A0E8F);
+  }
+
+  .subscribe-btn:hover {
+    @apply scale-105 brightness-110;
+    box-shadow: 0 4px 20px rgba(139, 47, 201, 0.4);
+  }
+
+  .hero-overlay {
+    @apply absolute inset-0;
+    background: linear-gradient(to right, #0d0117 30%, transparent 100%),
+      linear-gradient(to top, #0d0117 0%, transparent 40%);
+  }
+
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @keyframes modalUp {
-    from { opacity: 0; transform: scale(0.9) translateY(40px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
   }
 
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.8s ease-out forwards;
   }
 
   .animate-modal-up {
-    animation: modalUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: modalUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  .animate-blink {
+    animation: blink 1.5s infinite;
+  }
+
+  .page-transition {
+    animation: fadeIn 0.6s ease-out forwards;
   }
 }

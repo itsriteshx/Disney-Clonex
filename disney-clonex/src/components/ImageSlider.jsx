@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { movies } from "../data/movies";
 import { useAppContext } from "../context/AppContext";
+import { HiPlay, HiPlus, HiCheck } from "react-icons/hi2";
 
 function ImageSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { openModal } = useAppContext();
+  const { openModal, toggleWatchlist, watchlist } = useAppContext();
   
-  // Only use 4 featured movies for the slider
-  const featuredMovies = movies.slice(0, 4);
+  const featuredMovies = movies.filter(m => m.id <= 5);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -17,62 +17,98 @@ function ImageSlider() {
   }, [featuredMovies.length]);
 
   return (
-    <div className="relative w-full h-[550px] overflow-hidden rounded-2xl shadow-2xl mb-12 group">
-      <div
-        className="flex transition-transform duration-1000 ease-in-out h-full"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-      >
-        {featuredMovies.map((movie, index) => (
-          <div key={movie.id} className="min-w-full h-full relative">
+    <section className="relative w-full h-[520px] overflow-hidden bg-black mt-0">
+      {featuredMovies.map((movie, index) => {
+        const isWatched = watchlist.find(m => m.id === movie.id);
+        const isActive = index === currentIndex;
+        
+        return (
+          <div 
+            key={movie.id} 
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+          >
+            {/* Background Image */}
             <img
               src={movie.backdrop}
               alt={movie.title}
-              className="w-full h-full object-cover object-top scale-105 group-hover:scale-100 transition-transform duration-[5s]"
+              className="w-full h-full object-cover"
             />
-            {/* Content overlay */}
-            <div className="absolute bottom-16 left-16 z-10 text-left max-w-2xl animate-fade-in-up">
-              <h2 className="text-7xl font-bold text-white mb-6 drop-shadow-2xl font-heading tracking-wider">
-                {movie.title}
-              </h2>
-              <p className="text-white/90 text-lg mb-8 line-clamp-3 font-body leading-relaxed drop-shadow-lg">
-                {movie.description}
-              </p>
-              <div className="flex gap-4">
-                <button 
-                  onClick={() => openModal(movie, 'trailer')}
-                  className="bg-white text-brand-dark hover:bg-brand-gold hover:text-brand-dark px-10 py-4 rounded-xl font-bold transition-all flex items-center gap-3 shadow-xl hover:shadow-brand-gold/20"
-                >
-                  <span className="text-xl">▶</span> WATCH NOW
-                </button>
-                <button 
-                  onClick={() => openModal(movie, 'detail')}
-                  className="bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white border border-white/20 px-10 py-4 rounded-xl font-bold transition-all"
-                >
-                  DETAILS
-                </button>
+            
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/40 to-transparent z-[5]" style={{ background: 'linear-gradient(to right, rgba(13,1,23,1) 30%, transparent 100%)' }} />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent z-[5]" />
+            
+            {/* Content Container */}
+            <div className="absolute inset-0 z-10 flex items-center px-[4%]">
+              <div className="max-w-[650px] animate-fade-in">
+                <div className="text-text-gray font-extrabold text-sm uppercase tracking-widest mb-4">
+                  {movie.genre || "Action • Adventure"}
+                </div>
+                <h1 className="text-[56px] font-black text-white leading-[1.1] mb-6 tracking-tighter">
+                  {movie.title}
+                </h1>
+                <div className="flex items-center gap-4 mb-8 text-white/50 font-bold">
+                  <span className="bg-white/10 px-2.5 py-0.5 rounded text-xs text-white border border-white/20">U/A 16+</span>
+                  <span>{movie.year || "2024"}</span>
+                  <span>•</span>
+                  <span>2h 15m</span>
+                  <span className="flex items-center gap-1 text-brand-gold ml-2">★ {movie.rating}</span>
+                </div>
+                <p className="text-lg text-text-gray font-medium mb-10 leading-relaxed line-clamp-3">
+                  {movie.description}
+                </p>
+                <div className="flex items-center gap-5">
+                  <button 
+                    onClick={() => openModal(movie, 'trailer')}
+                    className="flex items-center gap-3 bg-white text-black px-10 py-4 rounded-xl font-black text-lg hover:bg-gray-200 transition-all hover:scale-105 active:scale-95"
+                  >
+                    <HiPlay className="text-3xl" /> WATCH NOW
+                  </button>
+                  <button 
+                    onClick={() => toggleWatchlist(movie)}
+                    className={`flex items-center gap-3 px-10 py-4 rounded-xl font-black text-lg transition-all border-2 active:scale-95 ${
+                      isWatched 
+                      ? "bg-brand-purple/20 border-brand-purple text-brand-purple" 
+                      : "bg-transparent border-white/30 text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {isWatched ? <HiCheck className="text-2xl" /> : <HiPlus className="text-2xl" />}
+                    {isWatched ? "WATCHLIST" : "WATCHLIST"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Floating Thumbnails on Right */}
+              <div className="hidden lg:flex flex-col gap-4 ml-auto self-end pb-20">
+                {featuredMovies.map((m, i) => (
+                  <div 
+                    key={m.id}
+                    onClick={() => setCurrentIndex(i)}
+                    className={`w-[120px] aspect-video rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-500 hover:scale-110 ${
+                      i === currentIndex ? 'border-brand-purple scale-110 shadow-lg shadow-brand-purple/20' : 'border-transparent opacity-40 hover:opacity-80'
+                    }`}
+                  >
+                    <img src={m.backdrop} alt={m.title} className="w-full h-full object-cover" />
+                  </div>
+                ))}
               </div>
             </div>
-            {/* Animated Gradient shadow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/40 to-transparent opacity-90" />
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent opacity-80" />
           </div>
-        ))}
-      </div>
+        );
+      })}
       
-      {/* Dots */}
-      <div className="absolute bottom-10 right-16 flex gap-3 z-20">
+      {/* Dot Indicators */}
+      <div className="absolute bottom-8 left-[4%] flex gap-2 z-20">
         {featuredMovies.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrentIndex(i)}
-            className={`h-1.5 rounded-full transition-all duration-500 ${i === currentIndex ? "bg-brand-gold w-12" : "bg-white/20 w-4 hover:bg-white/40"}`}
+            className={`h-1.5 rounded-full transition-all duration-500 ${i === currentIndex ? "bg-white w-10" : "bg-white/20 w-4 hover:bg-white/40"}`}
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
-
-export default ImageSlider;
 
 export default ImageSlider;

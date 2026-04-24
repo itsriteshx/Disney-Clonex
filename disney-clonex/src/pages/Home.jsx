@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
 import ImageSlider from "../components/ImageSlider";
-import ProductionHouses from "../components/ProductionHouses";
 import MovieRow from "../components/MovieRow";
 import Footer from "../components/Footer";
 import GlobalModal from "../components/GlobalModal";
@@ -12,83 +10,96 @@ import { useAppContext } from "../context/AppContext";
 function Home() {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
-  const { searchQuery, setActiveBrand } = useAppContext();
+  const { searchQuery } = useAppContext();
   
   const searchParams = new URLSearchParams(location.search);
   const typeFilter = searchParams.get('type');
-  const isSearching = searchParams.get('search') === 'true';
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
-  // Reset brand filter when navigating to specific types
-  useEffect(() => {
-    if (typeFilter || isSearching) {
-      // Keep search or type as is, but maybe reset brand if it conflicts
-    }
-  }, [typeFilter, isSearching]);
+  const movieFilters = ["All", "Action", "Comedy", "Drama", "Thriller", "Romance"];
 
   return (
-    <div className="bg-brand-dark min-h-screen relative flex font-body selection:bg-brand-blue selection:text-white">
-      <Sidebar />
-      <div className="flex-1 ml-20">
-        <Header />
-        <main className="px-10 py-6 max-w-[1600px] mx-auto">
-          {loading ? (
-            <div className="space-y-10 animate-pulse">
-              <div className="w-full h-[550px] bg-white/5 rounded-3xl"></div>
-              <div className="grid grid-cols-4 gap-8">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-40 bg-white/5 rounded-2xl"></div>
-                ))}
-              </div>
-              <div className="space-y-6">
-                <div className="w-64 h-10 bg-white/5 rounded-lg"></div>
-                <div className="flex gap-6 overflow-hidden">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div key={i} className="min-w-[200px] aspect-[2/3] bg-white/5 rounded-2xl"></div>
+    <div className="bg-brand-dark min-h-screen relative font-body selection:bg-brand-purple selection:text-white page-transition">
+      <Header />
+      
+      <main className="pt-0">
+        {loading ? (
+          <div className="space-y-12 animate-pulse px-[4%] pt-28">
+            <div className="w-full h-[520px] bg-white/5 rounded-xl"></div>
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-6">
+                <div className="w-64 h-8 bg-white/5 rounded-lg"></div>
+                <div className="flex gap-4 overflow-hidden">
+                  {[1, 2, 3, 4, 5].map((j) => (
+                    <div key={j} className="min-w-[220px] h-[124px] bg-white/5 rounded-lg"></div>
                   ))}
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="space-y-12 pb-20">
-              {/* Only show slider and brands if not searching specifically */}
-              {!searchQuery && !typeFilter && (
-                <>
-                  <ImageSlider />
-                  <ProductionHouses />
-                </>
-              )}
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {!searchQuery && <ImageSlider />}
 
-              {/* Dynamic Rows based on state */}
+            <div className={`pb-20 ${searchQuery ? 'pt-28' : 'pt-4'}`}>
               {searchQuery && (
                 <MovieRow title={`Results for "${searchQuery}"`} />
               )}
 
-              {(!searchQuery || typeFilter === 'movie') && (
-                <MovieRow title="Latest & Trending Movies" type="movie" />
-              )}
-              
-              {(!searchQuery || typeFilter === 'tv') && (
-                <MovieRow title="Popular TV Shows" type="tv" />
+              {/* Home Page Layout */}
+              {!typeFilter && !searchQuery && (
+                <>
+                  <MovieRow title="Live & Upcoming" type="sports" />
+                  <MovieRow title="Featured Today" type="movie" />
+                  <MovieRow title="Hotstar Specials" filterBrand="hotstar" />
+                  <MovieRow title="Top Picks For You" type="movie" />
+                  <MovieRow title="Hotstar Multi" filterBrand="pixar" />
+                  <MovieRow title="Sports" type="sports" />
+                  <MovieRow title="International" filterBrand="international" />
+                </>
               )}
 
-              {!searchQuery && !typeFilter && (
+              {/* TV Page Layout */}
+              {typeFilter === 'tv' && !searchQuery && (
                 <>
-                  <MovieRow title="Disney+ Originals" filterBrand="disney" />
-                  <MovieRow title="Marvel Universe" filterBrand="marvel" />
-                  <MovieRow title="Pixar Animation" filterBrand="pixar" />
-                  <MovieRow title="Star Wars Saga" filterBrand="starwars" />
+                  <MovieRow title="Popular Shows" type="tv" />
+                  <MovieRow title="Reality TV" type="tv" />
+                  <MovieRow title="Drama" type="tv" />
+                  <MovieRow title="Comedy" type="tv" />
+                </>
+              )}
+
+              {/* Movies Page Layout */}
+              {typeFilter === 'movie' && !searchQuery && (
+                <>
+                  <div className="px-[4%] flex gap-4 mb-8 overflow-x-auto no-scrollbar">
+                    {movieFilters.map(filter => (
+                      <button 
+                        key={filter}
+                        className={`px-8 py-2.5 rounded-full font-black text-xs uppercase tracking-widest transition-all ${
+                          filter === 'All' ? 'bg-white text-black' : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
+                        }`}
+                      >
+                        {filter}
+                      </button>
+                    ))}
+                  </div>
+                  <MovieRow title="New Releases" type="movie" />
+                  <MovieRow title="Blockbuster Action" type="movie" />
+                  <MovieRow title="Comedy Hits" type="movie" />
+                  <MovieRow title="Must-Watch Thrillers" type="movie" />
                 </>
               )}
             </div>
-          )}
-          <Footer />
-        </main>
-      </div>
+          </div>
+        )}
+        <Footer />
+      </main>
+      
       <GlobalModal />
     </div>
   );

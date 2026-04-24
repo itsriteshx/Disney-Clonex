@@ -4,9 +4,8 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeBrand, setActiveBrand] = useState('all');
   const [watchlist, setWatchlist] = useState(() => {
-    const saved = localStorage.getItem('disney_watchlist');
+    const saved = localStorage.getItem('hotstar_watchlist');
     return saved ? JSON.parse(saved) : [];
   });
   const [modalState, setModalState] = useState({
@@ -16,7 +15,7 @@ export const AppProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('disney_watchlist', JSON.stringify(watchlist));
+    localStorage.setItem('hotstar_watchlist', JSON.stringify(watchlist));
   }, [watchlist]);
 
   const toggleWatchlist = (movie) => {
@@ -41,8 +40,6 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider value={{
       searchQuery,
       setSearchQuery,
-      activeBrand,
-      setActiveBrand,
       watchlist,
       toggleWatchlist,
       modalState,

@@ -1,65 +1,85 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { movies as allMovies } from "../data/movies";
 import MovieCard from "./MovieCard";
-import { movies } from "../data/movies";
 import { useAppContext } from "../context/AppContext";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
-function MovieRow({ title, type, filterBrand }) {
+function MovieRow({ title, type, filterBrand, movies: propMovies }) {
   const rowRef = useRef(null);
-  const { searchQuery, activeBrand } = useAppContext();
-
-  const filteredMovies = useMemo(() => {
-    return movies.filter(movie => {
-      const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesBrand = activeBrand === 'all' ? true : movie.brand === activeBrand;
-      const matchesCategory = filterBrand ? movie.brand === filterBrand : true;
-      const matchesType = type ? movie.type === type : true;
-      
-      return matchesSearch && matchesBrand && matchesCategory && matchesType;
-    });
-  }, [searchQuery, activeBrand, filterBrand, type]);
+  const { searchQuery } = useAppContext();
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(true);
 
   const scroll = (direction) => {
-    const { current } = rowRef;
-    const scrollAmount = direction === "left" ? -800 : 800;
-    current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    if (rowRef.current) {
+      const { scrollLeft, clientWidth } = rowRef.current;
+      const scrollTo = direction === "left" ? scrollLeft - clientWidth * 0.8 : scrollLeft + clientWidth * 0.8;
+      rowRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
   };
 
-  if (filteredMovies.length === 0) return null;
+  const handleScroll = () => {
+    if (rowRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = rowRef.current;
+      setShowLeft(scrollLeft > 20);
+      setShowRight(scrollLeft < (scrollWidth - clientWidth - 20));
+    }
+  };
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener('resize', handleScroll);
+    return () => window.removeEventListener('resize', handleScroll);
+  }, []);
+
+  const displayMovies = propMovies || allMovies.filter((movie) => {
+    const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = !type || movie.type === type;
+    const matchesBrand = !filterBrand || movie.brand === filterBrand;
+    return matchesSearch && matchesType && matchesBrand;
+  });
+
+  if (displayMovies.length === 0) return null;
 
   return (
-    <div className="mb-12 relative group/row">
-      <div className="flex justify-between items-center mb-6 px-2">
-        <h3 className="text-white text-2xl font-bold tracking-widest font-heading uppercase">
+    <div className="relative group/row py-6 px-[4%]">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-[22px] font-black text-white tracking-tight">
           {title}
-        </h3>
-        <span className="text-brand-blue hover:text-white text-xs font-bold cursor-pointer transition-all uppercase tracking-tighter">
-          View All
-        </span>
+        </h2>
+        <a href="#" className="text-brand-purple text-xs font-black uppercase tracking-widest hover:brightness-125 transition-all">
+          See All <span className="ml-1">→</span>
+        </a>
       </div>
-
-      <div className="relative group">
-        {/* Navigation Arrows */}
-        <button 
-          onClick={() => scroll("left")}
-          className="absolute left-[-20px] top-1/2 z-[60] -translate-y-1/2 bg-black/60 p-4 h-[70%] rounded-r-xl opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md border border-white/10 text-white font-bold text-2xl"
-        >
-          {"<"}
-        </button>
-        <button 
-          onClick={() => scroll("right")}
-          className="absolute right-[-20px] top-1/2 z-[60] -translate-y-1/2 bg-black/60 p-4 h-[70%] rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md border border-white/10 text-white font-bold text-2xl"
-        >
-          {">"}
-        </button>
-
+      
+      <div className="relative overflow-visible">
+        {showLeft && (
+          <button
+            onClick={() => scroll("left")}
+            className="absolute left-[-20px] top-1/2 -translate-y-1/2 z-50 bg-black/60 hover:bg-black text-white w-10 h-16 rounded-md flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-all duration-300 backdrop-blur-md border border-white/5"
+          >
+            <HiChevronLeft className="text-3xl" />
+          </button>
+        )}
+        
         <div
           ref={rowRef}
-          className="flex overflow-x-scroll gap-6 pb-8 no-scrollbar scroll-smooth px-2"
+          onScroll={handleScroll}
+          className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth py-2"
         >
-          {filteredMovies.map((movie) => (
+          {displayMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
+
+        {showRight && (
+          <button
+            onClick={() => scroll("right")}
+            className="absolute right-[-20px] top-1/2 -translate-y-1/2 z-50 bg-black/60 hover:bg-black text-white w-10 h-16 rounded-md flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-all duration-300 backdrop-blur-md border border-white/5"
+          >
+            <HiChevronRight className="text-3xl" />
+          </button>
+        )}
       </div>
     </div>
   );
