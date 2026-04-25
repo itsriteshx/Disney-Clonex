@@ -3,10 +3,11 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import TV from "./pages/TV";
-import MovieDetails from "./pages/MovieDetails";
+import Detail from "./pages/Detail";
 import Watchlist from "./pages/Watchlist";
 import Premium from "./pages/Premium";
 import Sports from "./pages/Sports";
+import Search from "./pages/Search";
 import { AppProvider } from "./context/AppContext";
 import { ThemeProvider } from "./context/ThemeContext";
 
@@ -25,7 +26,8 @@ function App() {
               <Route path="/watchlist" element={<Watchlist />} />
               <Route path="/premium" element={<Premium />} />
               <Route path="/sports" element={<Sports />} />
-              <Route path="/movie/:id" element={<MovieDetails />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/movie/:id" element={<Detail />} />
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
           </div>

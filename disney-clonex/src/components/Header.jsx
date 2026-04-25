@@ -145,7 +145,12 @@ function Header() {
                 type="text"
                 placeholder="Search movies, shows..."
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
+                onChange={e => {
+                  setSearchQuery(e.target.value);
+                  if (e.target.value && window.location.hash !== "#/search") {
+                    navigate("/search");
+                  }
+                }}
                 style={{
                   background: "rgba(255,255,255,0.1)",
                   border: "1px solid rgba(255,255,255,0.2)",
@@ -184,66 +189,6 @@ function Header() {
             >
               <HiMagnifyingGlass />
             </button>
-          )}
-
-          {/* Search dropdown */}
-          {searchQuery && searchOpen && (
-            <div
-              style={{
-                position: "absolute",
-                top: "calc(100% + 10px)",
-                right: 0,
-                width: "320px",
-                background: "#1a0533",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "12px",
-                overflow: "hidden",
-                boxShadow: "0 20px 60px rgba(0,0,0,0.7)",
-                zIndex: 2000,
-                animation: "fadeIn 0.25s ease",
-              }}
-            >
-              {searchResults.length > 0 ? (
-                searchResults.map(item => (
-                  <div
-                    key={item.id}
-                    onClick={() => { 
-                      navigate(`/movie/${item.id}`); 
-                      setSearchOpen(false); 
-                      setSearchQuery(""); 
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      padding: "10px 14px",
-                      cursor: "pointer",
-                      borderBottom: "1px solid rgba(255,255,255,0.05)",
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(139,47,201,0.2)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-                  >
-                    <img
-                      src={item.image || item.poster}
-                      alt=""
-                      style={{ width: "64px", aspectRatio: "16/9", objectFit: "cover", borderRadius: "6px" }}
-                      onError={e => { e.target.style.display = "none"; }}
-                    />
-                    <div>
-                      <div style={{ color: "white", fontSize: "13px", fontWeight: 700 }}>{item.title}</div>
-                      <div style={{ color: "#aaa", fontSize: "11px", marginTop: "2px" }}>
-                        {item.year} • ★ {item.rating}
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div style={{ padding: "20px", textAlign: "center", color: "#aaa", fontSize: "13px" }}>
-                  No results found
-                </div>
-              )}
-            </div>
           )}
         </div>
 

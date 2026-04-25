@@ -40,34 +40,27 @@ function Home() {
           <>
             {!searchQuery && <ImageSlider />}
 
-            <div style={searchQuery ? { paddingTop: "20px" } : {}}>
+            <div style={{ paddingTop: "20px" }}>
+              {/* 🔴 Live & Upcoming */}
+              <MovieRow title="🔴 Live & Upcoming" type="sports" />
 
-              {searchQuery ? (
-                <MovieRow title={`Results for "${searchQuery}"`} />
-              ) : (
-                <>
-                  {/* 🔴 Live & Upcoming */}
-                  <MovieRow title="🔴 Live & Upcoming" type="sports" />
+              {/* 🎬 Featured Today */}
+              <MovieRow title="🎬 Featured Today" type="movie" filterBrand="marvel" />
 
-                  {/* 🎬 Featured Today */}
-                  <MovieRow title="🎬 Featured Today" type="movie" filterBrand="marvel" />
+              {/* ⭐ Hotstar Specials */}
+              <MovieRow title="⭐ Hotstar Specials" filterBrand="hotstar" />
 
-                  {/* ⭐ Hotstar Specials */}
-                  <MovieRow title="⭐ Hotstar Specials" filterBrand="hotstar" />
+              {/* 🎯 Top Picks For You */}
+              <MovieRow title="🎯 Top Picks For You" type="movie" />
 
-                  {/* 🎯 Top Picks For You */}
-                  <MovieRow title="🎯 Top Picks For You" type="movie" />
+              {/* 🎥 Bollywood Hits */}
+              <MovieRow title="🎥 Bollywood Hits" filterBrand="bollywood" />
 
-                  {/* 🎥 Bollywood Hits */}
-                  <MovieRow title="🎥 Bollywood Hits" filterBrand="bollywood" />
+              {/* 🏆 Sports */}
+              <MovieRow title="🏆 Sports" type="sports" />
 
-                  {/* 🏆 Sports */}
-                  <MovieRow title="🏆 Sports" type="sports" />
-
-                  {/* 🌍 International */}
-                  <MovieRow title="🌍 International" filterBrand="international" />
-                </>
-              )}
+              {/* 🌍 International */}
+              <MovieRow title="🌍 International" filterBrand="international" />
             </div>
           </>
         )}
