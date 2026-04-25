@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useTheme } from "../context/ThemeContext";
-import { HiMagnifyingGlass, HiXMark, HiSun, HiMoon } from "react-icons/hi2";
+import { HiMagnifyingGlass, HiXMark, HiSun, HiMoon, HiBars3 } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
 import { movies, sports } from "../data/movies";
 
@@ -11,8 +11,10 @@ const allContent = [...movies, ...sports];
 function Header() {
   const { searchQuery, setSearchQuery, openModal, setShowPlansModal } = useAppContext();
   const { isDarkMode, toggleTheme } = useTheme();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const searchRef = useRef(null);
 
   useEffect(() => {
@@ -66,13 +68,31 @@ function Header() {
       }}
     >
       {/* LEFT — Logo + Nav */}
-      <div style={{ display: "flex", alignItems: "center", gap: "36px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        
+        {/* Hamburger Menu Icon (Mobile Only) */}
+        <button
+          className="md:hidden"
+          onClick={() => setMobileMenuOpen(true)}
+          style={{
+            background: "none",
+            border: "none",
+            color: isDarkMode ? "white" : "#1a1d29",
+            fontSize: "24px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center"
+          }}
+        >
+          <HiBars3 />
+        </button>
+
         {/* Logo */}
         <Link
           to="/home"
           style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
         >
-          <AiFillStar style={{ color: "#f5a623", fontSize: "26px" }} />
+          <AiFillStar className="hidden md:block" style={{ color: "#f5a623", fontSize: "26px" }} />
           <span
             style={{
               fontSize: "26px",
@@ -86,8 +106,8 @@ function Header() {
           </span>
         </Link>
 
-        {/* Nav */}
-        <nav style={{ display: "flex", gap: "28px" }}>
+        {/* Nav (Desktop Only) */}
+        <nav className="hidden md:flex" style={{ gap: "28px", marginLeft: "20px" }}>
           {navItems.map(item => (
             <NavLink
               key={item.title}
@@ -131,10 +151,10 @@ function Header() {
                   border: "1px solid rgba(255,255,255,0.2)",
                   borderRadius: "8px",
                   padding: "7px 14px",
-                  color: "white",
+                  color: isDarkMode ? "white" : "#000",
                   fontSize: "13px",
                   outline: "none",
-                  width: "260px",
+                  width: "200px",
                   transition: "all 0.3s ease",
                 }}
               />
@@ -187,7 +207,11 @@ function Header() {
                 searchResults.map(item => (
                   <div
                     key={item.id}
-                    onClick={() => { openModal(item); setSearchOpen(false); setSearchQuery(""); }}
+                    onClick={() => { 
+                      navigate(`/movie/${item.id}`); 
+                      setSearchOpen(false); 
+                      setSearchQuery(""); 
+                    }}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -223,8 +247,9 @@ function Header() {
           )}
         </div>
 
-        {/* Language */}
+        {/* Language (Hidden on mobile) */}
         <div
+          className="hidden md:flex"
           style={{
             fontSize: "12px",
             fontWeight: 700,
@@ -232,7 +257,6 @@ function Header() {
             cursor: "pointer",
             textTransform: "uppercase",
             letterSpacing: "0.06em",
-            display: "flex",
             alignItems: "center",
             gap: "4px",
             transition: "color 0.2s",
@@ -264,17 +288,17 @@ function Header() {
           {isDarkMode ? <HiSun /> : <HiMoon />}
         </button>
 
-        {/* Subscribe */}
+        {/* Subscribe (Hidden on mobile) */}
         <button
-          className="subscribe-btn"
+          className="subscribe-btn hidden md:block"
           onClick={() => setShowPlansModal && setShowPlansModal(true)}
         >
           SUBSCRIBE
         </button>
 
-        {/* Avatar */}
+        {/* Watchlist Avatar */}
         <Link
-          to="/profile"
+          to="/watchlist"
           style={{
             width: "36px",
             height: "36px",
@@ -290,13 +314,104 @@ function Header() {
             border: "2px solid rgba(139,47,201,0.4)",
             transition: "transform 0.2s",
             cursor: "pointer",
+            flexShrink: 0
           }}
           onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.1)")}
           onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
         >
-          US
+          WL
         </Link>
       </div>
+
+      {/* Mobile Hamburger Drawer */}
+      <div 
+        className="md:hidden"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "250px",
+          height: "100vh",
+          background: isDarkMode ? "#0d0117" : "#f5f5f7",
+          zIndex: 2000,
+          transform: mobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
+          transition: "transform 0.3s ease",
+          boxShadow: mobileMenuOpen ? "4px 0 24px rgba(0,0,0,0.5)" : "none",
+          padding: "24px"
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
+          <span style={{ fontSize: "20px", fontWeight: 900, color: isDarkMode ? "white" : "#000" }}>hotstar</span>
+          <button 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ background: "none", border: "none", color: isDarkMode ? "white" : "#1a1d29", fontSize: "24px" }}
+          >
+            <HiXMark />
+          </button>
+        </div>
+
+        <nav style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          {navItems.map((link) => (
+            <NavLink
+              key={link.name || link.title}
+              to={link.path}
+              onClick={() => setMobileMenuOpen(false)}
+              style={({ isActive }) => ({
+                textDecoration: "none",
+                color: isActive 
+                  ? (isDarkMode ? "white" : "#000") 
+                  : (isDarkMode ? "#aaaaaa" : "#666"),
+                fontWeight: isActive ? 800 : 600,
+                fontSize: "18px"
+              })}
+            >
+              {link.name || link.title}
+            </NavLink>
+          ))}
+          <NavLink
+            to="/watchlist"
+            onClick={() => setMobileMenuOpen(false)}
+            style={({ isActive }) => ({
+              textDecoration: "none",
+              color: isActive 
+                ? (isDarkMode ? "white" : "#000") 
+                : (isDarkMode ? "#aaaaaa" : "#666"),
+              fontWeight: isActive ? 800 : 600,
+              fontSize: "18px"
+            })}
+          >
+            Watchlist
+          </NavLink>
+        </nav>
+        
+        <button
+          className="subscribe-btn"
+          style={{ width: "100%", marginTop: "32px" }}
+          onClick={() => {
+            setMobileMenuOpen(false);
+            if (setShowPlansModal) setShowPlansModal(true);
+          }}
+        >
+          SUBSCRIBE NOW
+        </button>
+      </div>
+
+      {/* Mobile Drawer Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 1500
+          }}
+        />
+      )}
     </header>
   );
 }

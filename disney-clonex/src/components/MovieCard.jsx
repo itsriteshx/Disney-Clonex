@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 import { HiPlay, HiPlus, HiCheck } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
 
 function MovieCard({ movie }) {
-  const { openModal, toggleWatchlist, watchlist } = useAppContext();
+  const { toggleWatchlist, watchlist } = useAppContext();
+  const navigate = useNavigate();
   const [imgError, setImgError] = useState(false);
   const isWatched = watchlist.find(m => m.id === movie.id);
 
@@ -28,7 +30,7 @@ function MovieCard({ movie }) {
     >
       {/* Card face */}
       <div
-        onClick={() => openModal(movie)}
+        onClick={() => navigate(`/movie/${movie.id}`)}
         style={{
           width: "100%",
           height: "100%",
@@ -104,7 +106,7 @@ function MovieCard({ movie }) {
         {/* Action buttons */}
         <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
           <button
-            onClick={e => { e.stopPropagation(); openModal(movie); }}
+            onClick={e => { e.stopPropagation(); navigate(`/movie/${movie.id}`); }}
             style={{
               background: "white",
               border: "none",

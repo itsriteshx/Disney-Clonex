@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { movies } from "../data/movies";
+import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { HiPlay, HiPlus, HiCheck } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
@@ -9,7 +10,8 @@ const heroMovies = movies.filter(m => m.backdrop).slice(0, 5);
 
 function ImageSlider() {
   const [current, setCurrent] = useState(0);
-  const { openModal, toggleWatchlist, watchlist } = useAppContext();
+  const { toggleWatchlist, watchlist } = useAppContext();
+  const navigate = useNavigate();
 
   // Auto-rotate every 5 seconds
   useEffect(() => {
@@ -155,7 +157,7 @@ function ImageSlider() {
           {/* CTA Buttons */}
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
             <button
-              onClick={() => openModal(movie, "trailer")}
+              onClick={() => navigate(`/movie/${movie.id}`)}
               className="pill-btn"
               style={{ background: "#ffffff", color: "#000000" }}
               onMouseEnter={e => (e.currentTarget.style.background = "#e8e8e8")}
