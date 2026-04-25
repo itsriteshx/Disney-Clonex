@@ -1,113 +1,209 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
+/* ── Design Tokens ─────────────────────────────────────────────────────────── */
 @theme {
-  --color-brand-dark: #0d0117;
-  --color-nav-bg: rgba(13, 1, 23, 0.95);
-  --color-brand-purple: #8B2FC9;
-  --color-brand-purple-dark: #4A0E8F;
-  --color-brand-gold: #f5a623;
-  --color-text-gray: #aaaaaa;
-  --font-heading: "Nunito", sans-serif;
-  --font-body: "Nunito", sans-serif;
+  --color-brand-dark:          #000000;
+  --color-brand-navy:          #0d0117;
+  --color-brand-purple:        #8B2FC9;
+  --color-brand-purple-dark:   #6a1fa0;
+  --color-brand-gold:          #f5a623;
+  --color-brand-blue:          #0072d2;
+  --color-brand-red:           #e63946;
+  --color-text-gray:           #aaaaaa;
+  --font-heading:              "Inter", sans-serif;
+  --font-body:                 "Inter", sans-serif;
 }
 
+/* ── Base ───────────────────────────────────────────────────────────────────── */
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
   body {
-    @apply bg-brand-dark text-white font-[family-name:--font-body];
+    background: #0d0117;
+    color: #ffffff;
+    font-family: "Inter", sans-serif;
     margin: 0;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-[family-name:--font-heading] font-extrabold;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Inter", sans-serif;
+    font-weight: 800;
   }
 }
 
+/* ── Utilities ──────────────────────────────────────────────────────────────── */
 @layer components {
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
 
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+  /* Scrollbar hide */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  .pill-btn {
-    @apply px-9 py-3.5 rounded-full font-extrabold text-base cursor-pointer transition-all duration-300 border-none flex items-center gap-2.5;
-  }
-
+  /* Subscribe CTA button */
   .subscribe-btn {
-    @apply px-6 py-2 rounded-md font-extrabold text-xs tracking-widest transition-all duration-300 text-white shadow-lg uppercase;
-    background: linear-gradient(135deg, #8B2FC9, #4A0E8F);
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #8B2FC9, #6a1fa0);
+    box-shadow: 0 2px 16px rgba(139,47,201,0.35);
   }
-
   .subscribe-btn:hover {
-    @apply scale-105 brightness-110;
-    box-shadow: 0 4px 20px rgba(139, 47, 201, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 4px 24px rgba(139,47,201,0.55);
   }
 
+  /* Hero gradient overlays */
   .hero-overlay {
-    @apply absolute inset-0;
-    background: linear-gradient(to right, #0d0117 30%, transparent 100%),
-      linear-gradient(to top, #0d0117 0%, transparent 40%);
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(13,1,23,1) 35%, rgba(13,1,23,0.5) 65%, transparent 100%),
+      linear-gradient(to top, rgba(13,1,23,1) 0%, transparent 50%);
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
+  /* Genre pill badge */
+  .genre-pill {
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.04em;
+  }
 
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* LIVE badge */
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #e63946;
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+    animation: blink 1.4s infinite;
+  }
+
+  /* NEW badge */
+  .new-badge {
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: #22c55e;
+    color: white;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Pill action buttons (Watch Now / Watchlist) */
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: none;
+  }
+  .pill-btn:active { transform: scale(0.96); }
+
+  /* Page transition */
+  .page-transition { animation: fadeIn 0.55s ease-out forwards; }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes modalUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes blink {
-
-    0%,
-    100% {
-      opacity: 1;
-    }
-
-    50% {
-      opacity: 0.5;
-    }
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
   }
 
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
   }
 
-  .animate-modal-up {
-    animation: modalUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  .animate-fade-in   { animation: fadeIn   0.7s ease-out forwards; }
+  .animate-modal-up  { animation: modalUp  0.4s cubic-bezier(0.25,1,0.5,1) forwards; }
+  .animate-blink     { animation: blink    1.4s infinite; }
+  .animate-slide-in  { animation: slideIn  0.5s ease-out forwards; }
+
+  /* Filter tabs */
+  .filter-tab {
+    padding: 7px 22px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+    background: rgba(255,255,255,0.07);
+    color: #aaaaaa;
+  }
+  .filter-tab:hover { color: white; background: rgba(255,255,255,0.12); }
+  .filter-tab.active {
+    background: linear-gradient(135deg, #8B2FC9, #6a1fa0);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 2px 12px rgba(139,47,201,0.4);
   }
 
-  .animate-blink {
-    animation: blink 1.5s infinite;
+  /* Carousel scroll arrows */
+  .scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    width: 42px;
+    height: 72px;
+    border-radius: 6px;
+    background: rgba(13,1,23,0.85);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
   }
-
-  .page-transition {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
+  .scroll-arrow:hover { background: rgba(139,47,201,0.5); }
+  .group-row:hover .scroll-arrow { opacity: 1; }
+  .scroll-arrow-left  { left:  -21px; }
+  .scroll-arrow-right { right: -21px; }
 }

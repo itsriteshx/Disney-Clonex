@@ -1,109 +1,212 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { movies } from "../data/movies";
 import { useAppContext } from "../context/AppContext";
 import { HiPlay, HiPlus, HiCheck } from "react-icons/hi2";
+import { AiFillStar } from "react-icons/ai";
+
+// Pick first 5 movies that have a backdrop for the hero slider
+const heroMovies = movies.filter(m => m.backdrop).slice(0, 5);
 
 function ImageSlider() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [current, setCurrent] = useState(0);
   const { openModal, toggleWatchlist, watchlist } = useAppContext();
-  
-  const featuredMovies = movies.filter(m => m.id <= 5);
 
+  // Auto-rotate every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev === featuredMovies.length - 1 ? 0 : prev + 1));
+      setCurrent(prev => (prev + 1) % heroMovies.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [featuredMovies.length]);
+  }, []);
+
+  if (!heroMovies.length) return null;
+
+  const movie = heroMovies[current];
+  const isWatched = watchlist.find(m => m.id === movie.id);
 
   return (
-    <section className="relative w-full h-[520px] overflow-hidden bg-black mt-0">
-      {featuredMovies.map((movie, index) => {
-        const isWatched = watchlist.find(m => m.id === movie.id);
-        const isActive = index === currentIndex;
-        
-        return (
-          <div 
-            key={movie.id} 
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-          >
-            {/* Background Image */}
-            <img
-              src={movie.backdrop}
-              alt={movie.title}
-              className="w-full h-full object-cover"
-            />
-            
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/40 to-transparent z-[5]" style={{ background: 'linear-gradient(to right, rgba(13,1,23,1) 30%, transparent 100%)' }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent z-[5]" />
-            
-            {/* Content Container */}
-            <div className="absolute inset-0 z-10 flex items-center px-[4%]">
-              <div className="max-w-[650px] animate-fade-in">
-                <div className="text-text-gray font-extrabold text-sm uppercase tracking-widest mb-4">
-                  {movie.genre || "Action • Adventure"}
-                </div>
-                <h1 className="text-[56px] font-black text-white leading-[1.1] mb-6 tracking-tighter">
-                  {movie.title}
-                </h1>
-                <div className="flex items-center gap-4 mb-8 text-white/50 font-bold">
-                  <span className="bg-white/10 px-2.5 py-0.5 rounded text-xs text-white border border-white/20">U/A 16+</span>
-                  <span>{movie.year || "2024"}</span>
-                  <span>•</span>
-                  <span>2h 15m</span>
-                  <span className="flex items-center gap-1 text-brand-gold ml-2">★ {movie.rating}</span>
-                </div>
-                <p className="text-lg text-text-gray font-medium mb-10 leading-relaxed line-clamp-3">
-                  {movie.description}
-                </p>
-                <div className="flex items-center gap-5">
-                  <button 
-                    onClick={() => openModal(movie, 'trailer')}
-                    className="flex items-center gap-3 bg-white text-black px-10 py-4 rounded-xl font-black text-lg hover:bg-gray-200 transition-all hover:scale-105 active:scale-95"
-                  >
-                    <HiPlay className="text-3xl" /> WATCH NOW
-                  </button>
-                  <button 
-                    onClick={() => toggleWatchlist(movie)}
-                    className={`flex items-center gap-3 px-10 py-4 rounded-xl font-black text-lg transition-all border-2 active:scale-95 ${
-                      isWatched 
-                      ? "bg-brand-purple/20 border-brand-purple text-brand-purple" 
-                      : "bg-transparent border-white/30 text-white hover:bg-white/5"
-                    }`}
-                  >
-                    {isWatched ? <HiCheck className="text-2xl" /> : <HiPlus className="text-2xl" />}
-                    {isWatched ? "WATCHLIST" : "WATCHLIST"}
-                  </button>
-                </div>
-              </div>
+    <section
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "520px",
+        overflow: "hidden",
+        background: "#0d0117",
+      }}
+    >
+      {/* Slides */}
+      {heroMovies.map((m, i) => (
+        <div
+          key={m.id}
+          style={{
+            position: "absolute",
+            inset: 0,
+            transition: "opacity 1s ease-in-out",
+            opacity: i === current ? 1 : 0,
+            zIndex: i === current ? 2 : 1,
+          }}
+        >
+          <img
+            src={m.backdrop}
+            alt={m.title}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onError={e => { e.target.style.display = "none"; }}
+          />
+        </div>
+      ))}
 
-              {/* Floating Thumbnails on Right */}
-              <div className="hidden lg:flex flex-col gap-4 ml-auto self-end pb-20">
-                {featuredMovies.map((m, i) => (
-                  <div 
-                    key={m.id}
-                    onClick={() => setCurrentIndex(i)}
-                    className={`w-[120px] aspect-video rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-500 hover:scale-110 ${
-                      i === currentIndex ? 'border-brand-purple scale-110 shadow-lg shadow-brand-purple/20' : 'border-transparent opacity-40 hover:opacity-80'
-                    }`}
-                  >
-                    <img src={m.backdrop} alt={m.title} className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* Gradient Overlay */}
+      <div className="hero-overlay" style={{ zIndex: 3 }} />
+
+      {/* Content */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 4,
+          display: "flex",
+          alignItems: "center",
+          padding: "0 4%",
+        }}
+      >
+        <div
+          key={current}
+          className="animate-fade-in"
+          style={{ maxWidth: "580px" }}
+        >
+          {/* Genre tags */}
+          <div style={{ display: "flex", gap: "8px", marginBottom: "14px", flexWrap: "wrap" }}>
+            {(movie.genre || "").split("•").map((g, i) => (
+              <span key={i} className="genre-pill">{g.trim()}</span>
+            ))}
           </div>
-        );
-      })}
-      
+
+          {/* Title */}
+          <h1
+            style={{
+              fontSize: "clamp(36px, 5vw, 56px)",
+              fontWeight: 900,
+              color: "#ffffff",
+              lineHeight: 1.08,
+              marginBottom: "16px",
+              letterSpacing: "-1px",
+            }}
+          >
+            {movie.title}
+          </h1>
+
+          {/* Meta */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "14px",
+              marginBottom: "16px",
+              flexWrap: "wrap",
+            }}
+          >
+            <span
+              style={{
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                borderRadius: "4px",
+                padding: "2px 8px",
+                fontSize: "11px",
+                color: "white",
+                fontWeight: 700,
+              }}
+            >
+              U/A 16+
+            </span>
+            <span style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>{movie.year || "2024"}</span>
+            <span style={{ color: "#aaa" }}>•</span>
+            <span style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>2h 15m</span>
+            {/* Rating badge */}
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                color: "#f5a623",
+                fontWeight: 800,
+                fontSize: "14px",
+              }}
+            >
+              <AiFillStar /> {movie.rating}
+            </span>
+          </div>
+
+          {/* Description */}
+          <p
+            style={{
+              color: "#aaaaaa",
+              fontSize: "15px",
+              lineHeight: 1.65,
+              marginBottom: "28px",
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {movie.description}
+          </p>
+
+          {/* CTA Buttons */}
+          <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+            <button
+              onClick={() => openModal(movie, "trailer")}
+              className="pill-btn"
+              style={{ background: "#ffffff", color: "#000000" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "#e8e8e8")}
+              onMouseLeave={e => (e.currentTarget.style.background = "#ffffff")}
+            >
+              <HiPlay style={{ fontSize: "22px" }} /> Watch Now
+            </button>
+
+            <button
+              onClick={() => toggleWatchlist(movie)}
+              className="pill-btn"
+              style={{
+                background: isWatched ? "rgba(139,47,201,0.2)" : "rgba(255,255,255,0.08)",
+                color: isWatched ? "#8B2FC9" : "#ffffff",
+                border: isWatched ? "2px solid #8B2FC9" : "2px solid rgba(255,255,255,0.25)",
+              }}
+              onMouseEnter={e => { if (!isWatched) e.currentTarget.style.background = "rgba(255,255,255,0.14)"; }}
+              onMouseLeave={e => { if (!isWatched) e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+            >
+              {isWatched ? <HiCheck style={{ fontSize: "20px" }} /> : <HiPlus style={{ fontSize: "20px" }} />}
+              Watchlist
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Dot Indicators */}
-      <div className="absolute bottom-8 left-[4%] flex gap-2 z-20">
-        {featuredMovies.map((_, i) => (
+      <div
+        style={{
+          position: "absolute",
+          bottom: "28px",
+          left: "4%",
+          display: "flex",
+          gap: "8px",
+          zIndex: 5,
+        }}
+      >
+        {heroMovies.map((_, i) => (
           <button
             key={i}
-            onClick={() => setCurrentIndex(i)}
-            className={`h-1.5 rounded-full transition-all duration-500 ${i === currentIndex ? "bg-white w-10" : "bg-white/20 w-4 hover:bg-white/40"}`}
+            onClick={() => setCurrent(i)}
+            style={{
+              height: "4px",
+              width: i === current ? "36px" : "14px",
+              borderRadius: "999px",
+              background: i === current ? "#ffffff" : "rgba(255,255,255,0.25)",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
+              transition: "all 0.5s ease",
+            }}
           />
         ))}
       </div>

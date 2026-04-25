@@ -1,17 +1,20 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showPlansModal, setShowPlansModal] = useState(false);
   const [watchlist, setWatchlist] = useState(() => {
-    const saved = localStorage.getItem('hotstar_watchlist');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('hotstar_watchlist');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
   });
   const [modalState, setModalState] = useState({
     isOpen: false,
     movie: null,
-    type: 'detail' // 'detail' or 'trailer'
+    type: 'detail',
   });
 
   useEffect(() => {
@@ -21,31 +24,27 @@ export const AppProvider = ({ children }) => {
   const toggleWatchlist = (movie) => {
     setWatchlist(prev => {
       const exists = prev.find(m => m.id === movie.id);
-      if (exists) {
-        return prev.filter(m => m.id !== movie.id);
-      }
-      return [...prev, movie];
+      return exists ? prev.filter(m => m.id !== movie.id) : [...prev, movie];
     });
   };
 
-  const openModal = (movie, type = 'detail') => {
-    setModalState({ isOpen: true, movie, type });
-  };
-
-  const closeModal = () => {
-    setModalState({ ...modalState, isOpen: false });
-  };
+  const openModal  = (movie, type = 'detail') => setModalState({ isOpen: true, movie, type });
+  const closeModal = () => setModalState(s => ({ ...s, isOpen: false }));
 
   return (
-    <AppContext.Provider value={{
-      searchQuery,
-      setSearchQuery,
-      watchlist,
-      toggleWatchlist,
-      modalState,
-      openModal,
-      closeModal
-    }}>
+    <AppContext.Provider
+      value={{
+        searchQuery,
+        setSearchQuery,
+        watchlist,
+        toggleWatchlist,
+        modalState,
+        openModal,
+        closeModal,
+        showPlansModal,
+        setShowPlansModal,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

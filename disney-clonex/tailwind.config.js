@@ -7,9 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brand-dark': '#0f1014',
-        'brand-blue': '#0063e5',
-        'brand-blue-hover': '#0483ee',
+        'brand-dark':         '#0d0117',
+        'brand-navy':         '#0d0117',
+        'brand-purple':       '#8B2FC9',
+        'brand-purple-dark':  '#6a1fa0',
+        'brand-gold':         '#f5a623',
+        'brand-blue':         '#0072d2',
+        'brand-red':          '#e63946',
+        'text-gray':          '#aaaaaa',
+      },
+      fontFamily: {
+        heading: ['Inter', 'sans-serif'],
+        body:    ['Inter', 'sans-serif'],
       },
     },
   },

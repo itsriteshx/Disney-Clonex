@@ -1,73 +1,109 @@
-import React, { useState, useEffect, useRef } from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { NavLink, Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-import { HiMagnifyingGlass } from "react-icons/hi2";
+import { HiMagnifyingGlass, HiXMark } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
-import { movies } from "../data/movies";
+import { movies, sports } from "../data/movies";
+
+const allContent = [...movies, ...sports];
 
 function Header() {
-  const { searchQuery, setSearchQuery, openModal } = useAppContext();
-  const location = useLocation();
+  const { searchQuery, setSearchQuery, openModal, setShowPlansModal } = useAppContext();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [searchExpanded, setSearchExpanded] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const searchRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    
-    const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setSearchExpanded(false);
-        if (!searchQuery) setSearchExpanded(false);
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    const handleClickOutside = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setSearchOpen(false);
       }
     };
+    window.addEventListener("scroll", handleScroll);
     window.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [searchQuery]);
+  }, []);
 
   const navItems = [
-    { title: "Home", path: "/home" },
-    { title: "TV", path: "/home?type=tv" },
-    { title: "Movies", path: "/home?type=movie" },
-    { title: "Sports", path: "/sports" },
+    { title: "Home",    path: "/home" },
+    { title: "TV",      path: "/tv" },
+    { title: "Movies",  path: "/movies" },
+    { title: "Sports",  path: "/sports" },
     { title: "Premium", path: "/premium" },
   ];
 
-  const searchResults = searchQuery 
-    ? movies.filter(m => m.title.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5)
+  const searchResults = searchQuery
+    ? allContent
+        .filter(m => m.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        .slice(0, 6)
     : [];
 
   return (
-    <header 
-      className={`fixed top-0 w-full h-[80px] flex items-center justify-between px-[4%] z-[100] transition-all duration-500 ${
-        isScrolled ? 'bg-brand-dark/95 backdrop-blur-md shadow-2xl' : 'bg-gradient-to-b from-brand-dark to-transparent'
-      }`}
+    <header
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: "72px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 4%",
+        zIndex: 1000,
+        transition: "all 0.4s ease",
+        background: isScrolled
+          ? "rgba(13,1,23,0.97)"
+          : "linear-gradient(to bottom, rgba(13,1,23,0.95) 0%, rgba(13,1,23,0.6) 70%, transparent 100%)",
+        backdropFilter: isScrolled ? "blur(16px)" : "none",
+        borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
+      }}
     >
-      <div className="flex items-center gap-10">
-        <Link to="/home" className="flex items-center gap-1.5 cursor-pointer">
-          <AiFillStar className="text-brand-gold text-[28px]" />
-          <span className="text-[30px] font-black tracking-tighter text-white">hotstar</span>
+      {/* LEFT — Logo + Nav */}
+      <div style={{ display: "flex", alignItems: "center", gap: "36px" }}>
+        {/* Logo */}
+        <Link
+          to="/home"
+          style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
+        >
+          <AiFillStar style={{ color: "#f5a623", fontSize: "26px" }} />
+          <span
+            style={{
+              fontSize: "26px",
+              fontWeight: 900,
+              color: "#ffffff",
+              letterSpacing: "-0.5px",
+              lineHeight: 1,
+            }}
+          >
+            hotstar
+          </span>
         </Link>
-        
-        <nav className="flex gap-8 ml-4">
-          {navItems.map((item) => (
+
+        {/* Nav */}
+        <nav style={{ display: "flex", gap: "28px" }}>
+          {navItems.map(item => (
             <NavLink
               key={item.title}
               to={item.path}
-              className={({ isActive }) => 
-                `text-sm font-extrabold uppercase tracking-widest transition-all duration-300 relative h-[80px] flex items-center ${
-                  isActive || (item.path === '/home' && location.pathname === '/home' && !location.search)
-                  ? 'text-white border-b-[3px] border-brand-purple' 
-                  : 'text-text-gray hover:text-white'
-                }`
-              }
+              style={({ isActive }) => ({
+                fontSize: "13px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                textDecoration: "none",
+                color: isActive ? "#ffffff" : "#aaaaaa",
+                borderBottom: isActive ? "3px solid #8B2FC9" : "3px solid transparent",
+                paddingBottom: "4px",
+                transition: "all 0.25s ease",
+                height: "72px",
+                display: "flex",
+                alignItems: "center",
+              })}
             >
               {item.title}
             </NavLink>
@@ -75,49 +111,166 @@ function Header() {
         </nav>
       </div>
 
-      <div className="flex items-center gap-8">
-        <div ref={searchRef} className={`relative flex items-center transition-all duration-500 ${searchExpanded || searchQuery ? 'w-80' : 'w-40'}`}>
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchQuery}
-            onFocus={() => setSearchExpanded(true)}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-transparent border-b border-white/20 px-1 py-1.5 text-white outline-none w-full text-sm placeholder:text-text-gray focus:border-brand-purple transition-colors"
-          />
-          <HiMagnifyingGlass className={`absolute right-0 text-lg transition-colors ${searchExpanded || searchQuery ? 'text-brand-purple' : 'text-text-gray'}`} />
-          
-          {/* Search Results Dropdown */}
-          {searchQuery && searchExpanded && (
-            <div className="absolute top-[100%] left-0 w-full bg-brand-dark border border-white/10 rounded-xl mt-2 shadow-2xl overflow-hidden animate-fade-in z-[110]">
+      {/* RIGHT — Search + Language + Subscribe + Avatar */}
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+
+        {/* Search */}
+        <div ref={searchRef} style={{ position: "relative" }}>
+          {searchOpen ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <input
+                autoFocus
+                type="text"
+                placeholder="Search movies, shows..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                style={{
+                  background: "rgba(255,255,255,0.1)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  borderRadius: "8px",
+                  padding: "7px 14px",
+                  color: "white",
+                  fontSize: "13px",
+                  outline: "none",
+                  width: "260px",
+                  transition: "all 0.3s ease",
+                }}
+              />
+              <button
+                onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
+                style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer", fontSize: "18px", padding: "4px" }}
+              >
+                <HiXMark />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setSearchOpen(true)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#aaaaaa",
+                cursor: "pointer",
+                fontSize: "20px",
+                padding: "4px",
+                display: "flex",
+                alignItems: "center",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = "#ffffff")}
+              onMouseLeave={e => (e.currentTarget.style.color = "#aaaaaa")}
+            >
+              <HiMagnifyingGlass />
+            </button>
+          )}
+
+          {/* Search dropdown */}
+          {searchQuery && searchOpen && (
+            <div
+              style={{
+                position: "absolute",
+                top: "calc(100% + 10px)",
+                right: 0,
+                width: "320px",
+                background: "#1a0533",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "12px",
+                overflow: "hidden",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.7)",
+                zIndex: 2000,
+                animation: "fadeIn 0.25s ease",
+              }}
+            >
               {searchResults.length > 0 ? (
-                searchResults.map((movie) => (
-                  <div 
-                    key={movie.id} 
-                    onClick={() => { openModal(movie); setSearchExpanded(false); setSearchQuery(""); }}
-                    className="flex items-center gap-4 p-3 hover:bg-white/5 cursor-pointer transition-colors border-b border-white/5 last:border-none"
+                searchResults.map(item => (
+                  <div
+                    key={item.id}
+                    onClick={() => { openModal(item); setSearchOpen(false); setSearchQuery(""); }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      padding: "10px 14px",
+                      cursor: "pointer",
+                      borderBottom: "1px solid rgba(255,255,255,0.05)",
+                      transition: "background 0.2s",
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(139,47,201,0.2)")}
+                    onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
                   >
-                    <img src={movie.backdrop || movie.poster} alt="" className="w-16 aspect-video object-cover rounded-md" />
+                    <img
+                      src={item.image || item.poster}
+                      alt=""
+                      style={{ width: "64px", aspectRatio: "16/9", objectFit: "cover", borderRadius: "6px" }}
+                      onError={e => { e.target.style.display = "none"; }}
+                    />
                     <div>
-                      <h4 className="text-white text-xs font-bold truncate">{movie.title}</h4>
-                      <p className="text-text-gray text-[10px] font-medium">{movie.year} • {movie.rating} ★</p>
+                      <div style={{ color: "white", fontSize: "13px", fontWeight: 700 }}>{item.title}</div>
+                      <div style={{ color: "#aaa", fontSize: "11px", marginTop: "2px" }}>
+                        {item.year} • ★ {item.rating}
+                      </div>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="p-4 text-center text-text-gray text-xs">No results found</div>
+                <div style={{ padding: "20px", textAlign: "center", color: "#aaa", fontSize: "13px" }}>
+                  No results found
+                </div>
               )}
             </div>
           )}
         </div>
-        
-        <div className="flex items-center gap-1 text-xs font-bold text-text-gray cursor-pointer hover:text-white uppercase tracking-widest">
-          English <span className="text-[10px] opacity-50">▼</span>
+
+        {/* Language */}
+        <div
+          style={{
+            fontSize: "12px",
+            fontWeight: 700,
+            color: "#aaaaaa",
+            cursor: "pointer",
+            textTransform: "uppercase",
+            letterSpacing: "0.06em",
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            transition: "color 0.2s",
+          }}
+          onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+          onMouseLeave={e => (e.currentTarget.style.color = "#aaa")}
+        >
+          English <span style={{ fontSize: "9px", opacity: 0.6 }}>▼</span>
         </div>
 
-        <button className="subscribe-btn">SUBSCRIBE</button>
-        
-        <Link to="/profile" className="w-9 h-9 rounded-full bg-brand-purple/20 flex items-center justify-center border border-brand-purple/30 text-white font-black text-xs cursor-pointer hover:scale-105 transition-all">
+        {/* Subscribe */}
+        <button
+          className="subscribe-btn"
+          onClick={() => setShowPlansModal && setShowPlansModal(true)}
+        >
+          SUBSCRIBE
+        </button>
+
+        {/* Avatar */}
+        <Link
+          to="/profile"
+          style={{
+            width: "36px",
+            height: "36px",
+            borderRadius: "50%",
+            background: "linear-gradient(135deg, #8B2FC9, #6a1fa0)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: 900,
+            fontSize: "11px",
+            textDecoration: "none",
+            border: "2px solid rgba(139,47,201,0.4)",
+            transition: "transform 0.2s",
+            cursor: "pointer",
+          }}
+          onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.1)")}
+          onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+        >
           US
         </Link>
       </div>

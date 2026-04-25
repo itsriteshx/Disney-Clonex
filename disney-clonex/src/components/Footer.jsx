@@ -1,53 +1,130 @@
-import React from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import { AiFillStar } from "react-icons/ai";
+
+const socialIcons = [
+  { icon: <FaFacebookF />, href: "#" },
+  { icon: <FaTwitter />,   href: "#" },
+  { icon: <FaInstagram />, href: "#" },
+  { icon: <FaYoutube />,   href: "#" },
+];
+
+const footerLinks = [
+  "About Hotstar", "Terms Of Use", "Privacy Policy", "FAQ", "Feedback", "Careers",
+];
 
 function Footer() {
   return (
-    <footer className="bg-[#080010] py-20 px-[4%] mt-0 border-t border-white/5">
-      <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-wrap gap-8">
-            <a href="#" className="text-text-gray text-sm font-bold hover:text-white transition-colors">About Hotstar</a>
-            <a href="#" className="text-text-gray text-sm font-bold hover:text-white transition-colors">Terms Of Use</a>
-            <a href="#" className="text-text-gray text-sm font-bold hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="text-text-gray text-sm font-bold hover:text-white transition-colors">FAQ</a>
-            <a href="#" className="text-text-gray text-sm font-bold hover:text-white transition-colors">Feedback</a>
-            <a href="#" className="text-text-gray text-sm font-bold hover:text-white transition-colors">Careers</a>
+    <footer
+      style={{
+        background: "#080010",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+        padding: "56px 4% 36px",
+        marginTop: "40px",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          gap: "40px",
+          marginBottom: "40px",
+        }}
+      >
+        {/* Left — links + copyright */}
+        <div style={{ maxWidth: "600px" }}>
+          {/* Logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}>
+            <AiFillStar style={{ color: "#f5a623", fontSize: "22px" }} />
+            <span style={{ fontSize: "22px", fontWeight: 900, color: "white", letterSpacing: "-0.3px" }}>
+              hotstar
+            </span>
           </div>
-          <p className="text-text-gray text-xs max-w-xl leading-loose">
-            © 2025 STAR. All Rights Reserved. HBO, Home Box Office and all related channel and programming logos are service marks of, and all related programming visuals and elements are the property of, Home Box Office, Inc. All rights reserved.
+
+          {/* Links */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 24px", marginBottom: "24px" }}>
+            {footerLinks.map(link => (
+              <a
+                key={link}
+                href="#"
+                style={{
+                  color: "#aaaaaa",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#ffffff")}
+                onMouseLeave={e => (e.currentTarget.style.color = "#aaaaaa")}
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+
+          <p style={{ color: "#555", fontSize: "11px", lineHeight: 1.8, maxWidth: "520px" }}>
+            © 2025 Hotstar. All Rights Reserved. Content available on Hotstar is subject to
+            licensing. Hotstar is a brand of Star India Pvt. Ltd. All rights reserved.
           </p>
         </div>
 
-        <div className="flex flex-col gap-8">
-          <div className="flex gap-4 items-center">
-            <h4 className="text-white font-black text-sm uppercase tracking-widest mr-2">Connect with us</h4>
-            <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-white hover:bg-brand-purple cursor-pointer transition-all">
-              <FaFacebookF />
-            </div>
-            <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-white hover:bg-brand-purple cursor-pointer transition-all">
-              <FaTwitter />
-            </div>
-            <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-white hover:bg-brand-purple cursor-pointer transition-all">
-              <FaInstagram />
-            </div>
-            <div className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-white hover:bg-brand-purple cursor-pointer transition-all">
-              <FaYoutube />
-            </div>
+        {/* Right — social + app badges */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          {/* Social */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
+              Connect
+            </span>
+            {socialIcons.map(({ icon, href }, i) => (
+              <a
+                key={i}
+                href={href}
+                style={{
+                  width: "38px", height: "38px",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.06)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: "white", fontSize: "14px",
+                  textDecoration: "none",
+                  transition: "background 0.2s, transform 0.2s",
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = "#8B2FC9";
+                  e.currentTarget.style.transform = "scale(1.1)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                {icon}
+              </a>
+            ))}
           </div>
-          
-          <div className="flex gap-4 items-center">
-            <h4 className="text-white font-black text-sm uppercase tracking-widest mr-2">Hotstar App</h4>
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" 
-              alt="app store" 
-              className="h-10 cursor-pointer rounded-lg hover:scale-105 transition-transform"
-            />
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
-              alt="play store" 
-              className="h-10 cursor-pointer rounded-lg hover:scale-105 transition-transform"
-            />
+
+          {/* App badges */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
+              Download
+            </span>
+            <a href="#">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+                alt="App Store"
+                style={{ height: "36px", borderRadius: "8px", transition: "transform 0.2s" }}
+                onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.06)")}
+                onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+              />
+            </a>
+            <a href="#">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                alt="Google Play"
+                style={{ height: "36px", borderRadius: "8px", transition: "transform 0.2s" }}
+                onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.06)")}
+                onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+              />
+            </a>
           </div>
         </div>
       </div>

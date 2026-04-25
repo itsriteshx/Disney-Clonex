@@ -1,61 +1,100 @@
-import React from "react";
 import Header from "../components/Header";
 import MovieCard from "../components/MovieCard";
 import Footer from "../components/Footer";
+import Modals from "../components/GlobalModal";
 import { useAppContext } from "../context/AppContext";
-import GlobalModal from "../components/GlobalModal";
-import { HiPlus } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
+import { AiFillStar } from "react-icons/ai";
 
 function Profile() {
   const { watchlist } = useAppContext();
+  const navigate = useNavigate();
 
   return (
-    <div className="bg-brand-dark min-h-screen relative font-body page-transition">
+    <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
-      
-      <main className="pt-32 px-[4%] max-w-[1600px] mx-auto min-h-screen">
-        <div className="mb-16 animate-fade-in">
-          <h1 className="text-6xl font-extrabold text-white mb-4 tracking-tight">My Space</h1>
-          <p className="text-text-gray text-xl">Manage your watchlist and account settings</p>
-        </div>
 
-        <section className="mb-20">
-          <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-3xl font-extrabold text-white uppercase tracking-widest">My Watchlist</h2>
-            <span className="bg-brand-purple text-white px-3 py-1 rounded-full text-xs font-bold">
-              {watchlist.length}
-            </span>
+      <main style={{ paddingTop: "72px", padding: "110px 4% 60px" }}>
+        <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+
+          {/* Profile header */}
+          <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "48px" }} className="animate-fade-in">
+            <div style={{
+              width: "72px", height: "72px", borderRadius: "50%",
+              background: "linear-gradient(135deg, #8B2FC9, #6a1fa0)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "24px", fontWeight: 900, color: "white",
+              border: "3px solid rgba(139,47,201,0.4)",
+            }}>
+              US
+            </div>
+            <div>
+              <h1 style={{ fontSize: "32px", fontWeight: 900, margin: "0 0 4px", letterSpacing: "-0.5px" }}>
+                My Space
+              </h1>
+              <p style={{ color: "#aaa", fontSize: "14px", margin: 0 }}>Manage your watchlist and preferences</p>
+            </div>
           </div>
 
-          {watchlist.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-              {watchlist.map((movie) => (
-                <div key={movie.id} className="animate-fade-in">
-                  <MovieCard movie={movie} />
-                </div>
-              ))}
+          {/* Watchlist */}
+          <section>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+              <h2 style={{ fontSize: "22px", fontWeight: 800, margin: 0 }}>My Watchlist</h2>
+              <span style={{
+                background: "linear-gradient(135deg, #8B2FC9, #6a1fa0)",
+                color: "white", padding: "2px 12px", borderRadius: "999px",
+                fontSize: "12px", fontWeight: 800,
+              }}>
+                {watchlist.length}
+              </span>
             </div>
-          ) : (
-            <div className="bg-white/5 border border-white/10 rounded-[32px] p-24 text-center backdrop-blur-xl">
-              <div className="text-7xl mb-8 flex justify-center text-white/10">
-                <HiPlus />
-              </div>
-              <h3 className="text-3xl font-extrabold text-white mb-3">Your watchlist is empty</h3>
-              <p className="text-text-gray mb-10 text-lg">Add movies and shows to keep track of what you want to watch.</p>
-              <button 
-                onClick={() => window.location.href = '/home'}
-                className="bg-brand-purple hover:scale-105 text-white px-12 py-4 rounded-xl font-extrabold transition-all shadow-lg shadow-brand-purple/20"
-              >
-                DISCOVER CONTENT
-              </button>
-            </div>
-          )}
-        </section>
 
-        <Footer />
+            {watchlist.length > 0 ? (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+                {watchlist.map(movie => (
+                  <div key={movie.id} className="animate-fade-in">
+                    <MovieCard movie={movie} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "20px",
+                padding: "80px 40px",
+                textAlign: "center",
+              }}>
+                <AiFillStar style={{ color: "#f5a623", fontSize: "48px", marginBottom: "16px" }} />
+                <h3 style={{ fontSize: "22px", fontWeight: 800, marginBottom: "10px" }}>Your watchlist is empty</h3>
+                <p style={{ color: "#aaa", fontSize: "14px", marginBottom: "28px" }}>
+                  Add movies and shows to keep track of what you want to watch.
+                </p>
+                <button
+                  onClick={() => navigate("/home")}
+                  style={{
+                    background: "linear-gradient(135deg, #8B2FC9, #6a1fa0)",
+                    color: "white", border: "none", padding: "12px 32px",
+                    borderRadius: "10px", fontWeight: 800, fontSize: "14px",
+                    cursor: "pointer", letterSpacing: "0.04em",
+                    transition: "all 0.25s ease",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.05)")}
+                  onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+                >
+                  DISCOVER CONTENT
+                </button>
+              </div>
+            )}
+          </section>
+        </div>
+
+        <div style={{ marginTop: "60px" }}>
+          <Footer />
+        </div>
       </main>
-      
-      <GlobalModal />
+
+      <Modals />
     </div>
   );
 }

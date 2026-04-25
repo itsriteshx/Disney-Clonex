@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useState } from "react";
+import { useAppContext } from "../context/AppContext";
 import { HiPlay, HiPlus, HiCheck } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
 
@@ -8,76 +8,161 @@ function MovieCard({ movie }) {
   const [imgError, setImgError] = useState(false);
   const isWatched = watchlist.find(m => m.id === movie.id);
 
+  const imgSrc = movie.image || movie.poster;
+
   return (
-    <div className="relative flex-none w-[220px] h-[124px] rounded-lg overflow-visible cursor-pointer group transition-all duration-300 hover:scale-[1.08] hover:z-[100] bg-brand-dark">
-      {/* Card Body */}
-      <div 
+    <div
+      style={{
+        position: "relative",
+        flexShrink: 0,
+        width: "220px",
+        aspectRatio: "16/9",
+        borderRadius: "8px",
+        overflow: "visible",
+        cursor: "pointer",
+        transition: "transform 0.3s ease",
+      }}
+      className="card-hover-group"
+      onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08)"; e.currentTarget.style.zIndex = 100; }}
+      onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.zIndex = "auto"; }}
+    >
+      {/* Card face */}
+      <div
         onClick={() => openModal(movie)}
-        className="relative w-full h-full rounded-lg overflow-hidden border border-white/5 group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300"
+        style={{
+          width: "100%",
+          height: "100%",
+          borderRadius: "8px",
+          overflow: "hidden",
+          position: "relative",
+          border: "1px solid rgba(255,255,255,0.06)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.6)",
+        }}
       >
         {imgError ? (
-          <div className="w-full h-full bg-gradient-to-br from-[#1a0533] to-[#0d0117] flex flex-col items-center justify-center p-3 text-center">
-            <AiFillStar className="text-brand-gold text-2xl mb-1" />
-            <span className="text-[10px] font-black text-white uppercase tracking-tighter line-clamp-1">{movie.title}</span>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background: "linear-gradient(135deg, #1a0533, #2d0d60)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "10px",
+              textAlign: "center",
+              gap: "6px",
+            }}
+          >
+            <AiFillStar style={{ color: "#f5a623", fontSize: "22px" }} />
+            <span style={{ fontSize: "11px", fontWeight: 800, color: "white", lineHeight: 1.3 }}>
+              {movie.title}
+            </span>
           </div>
         ) : (
-          <img 
-            src={movie.backdrop || movie.poster} 
-            alt={movie.title} 
+          <img
+            src={imgSrc}
+            alt={movie.title}
             onError={() => setImgError(true)}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
         )}
-        
-        {/* Badges */}
+
+        {/* LIVE badge */}
         {movie.isLive && (
-          <div className="absolute top-2 left-2 bg-[#ff0000] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm animate-blink z-10">
+          <div className="live-badge" style={{ position: "absolute", top: "8px", left: "8px", zIndex: 5 }}>
+            <span className="live-dot" />
             LIVE
           </div>
         )}
-        {movie.isNew && (
-          <div className="absolute top-2 left-2 bg-[#22c55e] text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm z-10">
+
+        {/* NEW badge */}
+        {movie.isNew && !movie.isLive && (
+          <span className="new-badge" style={{ position: "absolute", top: "8px", left: "8px", zIndex: 5 }}>
             NEW
-          </div>
-        )}
-        {movie.brand === 'hotstar' && (
-          <div className="absolute bottom-2 left-2 bg-brand-purple text-white text-[7px] font-black px-1 py-0.5 rounded-sm z-10 tracking-widest">
-            HOTSTAR
-          </div>
+          </span>
         )}
       </div>
 
-      {/* Hover Info Overlay */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
-        <div 
-          onClick={() => openModal(movie)}
-          className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent flex flex-col justify-end p-3 rounded-lg"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-black shadow-xl">
-              <HiPlay className="text-xl translate-x-0.5" />
-            </div>
-            <button 
-              onClick={(e) => { e.stopPropagation(); toggleWatchlist(movie); }}
-              className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 hover:bg-white/20 transition-all"
-            >
-              {isWatched ? <HiCheck className="text-lg" /> : <HiPlus className="text-lg" />}
-            </button>
-          </div>
-          
-          <h4 className="text-white font-black text-xs mb-0.5 line-clamp-1">{movie.title}</h4>
-          <div className="flex items-center gap-1.5 text-[9px] font-bold text-text-gray">
-            <span>{movie.year || "2024"}</span>
-            <span>•</span>
-            <span className="flex items-center gap-0.5 text-brand-gold"><AiFillStar /> {movie.rating}</span>
-            <span>•</span>
-            <span>2h 15m</span>
-          </div>
-          <div className="text-[8px] font-extrabold text-white/40 uppercase mt-0.5 tracking-wider">
-            {movie.genre || "Action • Drama"}
-          </div>
+      {/* Hover Overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "8px",
+          background: "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%)",
+          opacity: 0,
+          transition: "opacity 0.3s ease",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+          padding: "12px",
+          pointerEvents: "none",
+        }}
+        className="card-overlay"
+      >
+        {/* Action buttons */}
+        <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+          <button
+            onClick={e => { e.stopPropagation(); openModal(movie); }}
+            style={{
+              background: "white",
+              border: "none",
+              borderRadius: "50%",
+              width: "32px",
+              height: "32px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              transition: "transform 0.2s",
+              pointerEvents: "all",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.15)")}
+            onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            <HiPlay style={{ fontSize: "14px", color: "#000", transform: "translateX(1px)" }} />
+          </button>
+          <button
+            onClick={e => { e.stopPropagation(); toggleWatchlist(movie); }}
+            style={{
+              background: "rgba(255,255,255,0.15)",
+              border: "1px solid rgba(255,255,255,0.25)",
+              borderRadius: "50%",
+              width: "32px",
+              height: "32px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              color: "white",
+              transition: "background 0.2s",
+              pointerEvents: "all",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = "rgba(139,47,201,0.5)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.15)")}
+          >
+            {isWatched ? <HiCheck style={{ fontSize: "14px" }} /> : <HiPlus style={{ fontSize: "14px" }} />}
+          </button>
         </div>
+
+        {/* Info */}
+        <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "10px", marginBottom: "4px", display: "flex", gap: "6px" }}>
+          <span>{movie.year || "2024"}</span>
+          <span>•</span>
+          <span>
+            <AiFillStar style={{ color: "#f5a623", verticalAlign: "middle", fontSize: "10px" }} />
+            {" "}{movie.rating}
+          </span>
+        </div>
+        <h4 style={{ color: "white", fontSize: "11px", fontWeight: 800, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {movie.title}
+        </h4>
       </div>
+
+      <style>{`
+        .card-hover-group:hover .card-overlay { opacity: 1 !important; pointer-events: all !important; }
+      `}</style>
     </div>
   );
 }
