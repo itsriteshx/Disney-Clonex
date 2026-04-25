@@ -10,7 +10,6 @@ import Sports from "./components/Sports";
 import Search from "./components/Search";
 import { AppProvider } from "./context/AppContext";
 import { ThemeProvider } from "./context/ThemeContext";
-
 function App() {
   return (
     <ThemeProvider>
@@ -36,5 +35,4 @@ function App() {
     </ThemeProvider>
   );
 }
-
 export default App;

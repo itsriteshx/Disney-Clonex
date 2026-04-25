@@ -3,15 +3,12 @@ import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { HiPlay, HiPlus, HiCheck } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
-
 function MovieCard({ movie }) {
   const { toggleWatchlist, watchlist } = useAppContext();
   const navigate = useNavigate();
   const [imgError, setImgError] = useState(false);
   const isWatched = watchlist.find(m => m.id === movie.id);
-
   const imgSrc = movie.image || movie.poster;
-
   return (
     <div
       style={{
@@ -28,7 +25,7 @@ function MovieCard({ movie }) {
       onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08)"; e.currentTarget.style.zIndex = 100; }}
       onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.zIndex = "auto"; }}
     >
-      {/* Card face */}
+      {}
       <div
         onClick={() => navigate(`/movie/${movie.id}`)}
         style={{
@@ -69,24 +66,21 @@ function MovieCard({ movie }) {
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
         )}
-
-        {/* LIVE badge */}
+        {}
         {movie.isLive && (
           <div className="live-badge" style={{ position: "absolute", top: "8px", left: "8px", zIndex: 5 }}>
             <span className="live-dot" />
             LIVE
           </div>
         )}
-
-        {/* NEW badge */}
+        {}
         {movie.isNew && !movie.isLive && (
           <span className="new-badge" style={{ position: "absolute", top: "8px", left: "8px", zIndex: 5 }}>
             NEW
           </span>
         )}
       </div>
-
-      {/* Hover Overlay */}
+      {}
       <div
         style={{
           position: "absolute",
@@ -103,7 +97,7 @@ function MovieCard({ movie }) {
         }}
         className="card-overlay"
       >
-        {/* Action buttons */}
+        {}
         <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
           <button
             onClick={e => { e.stopPropagation(); navigate(`/movie/${movie.id}`); }}
@@ -147,8 +141,7 @@ function MovieCard({ movie }) {
             {isWatched ? <HiCheck style={{ fontSize: "14px" }} /> : <HiPlus style={{ fontSize: "14px" }} />}
           </button>
         </div>
-
-        {/* Info */}
+        {}
         <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "10px", marginBottom: "4px", display: "flex", gap: "6px" }}>
           <span>{movie.year || "2024"}</span>
           <span>•</span>
@@ -161,12 +154,10 @@ function MovieCard({ movie }) {
           {movie.title}
         </h4>
       </div>
-
       <style>{`
         .card-hover-group:hover .card-overlay { opacity: 1 !important; pointer-events: all !important; }
       `}</style>
     </div>
   );
 }
-
 export default MovieCard;

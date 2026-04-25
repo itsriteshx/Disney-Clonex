@@ -5,23 +5,18 @@ import MovieRow from "./MovieRow";
 import Footer from "./Footer";
 import Modals from "./GlobalModal";
 import { useAppContext } from "../context/AppContext";
-
 function TV() {
   const [loading, setLoading] = useState(true);
   const { searchQuery, t } = useAppContext();
-
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timer);
   }, []);
-
   return (
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
-
       <main style={{ paddingTop: "72px" }}>
         {!searchQuery && <ImageSlider />}
-
         {loading ? (
           <div style={{ padding: "40px 4%" }}>
             {[1, 2, 3].map(i => (
@@ -47,13 +42,10 @@ function TV() {
             </>
           )
         )}
-
         <Footer />
       </main>
-
       <Modals />
     </div>
   );
 }
-
 export default TV;

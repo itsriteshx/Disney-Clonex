@@ -5,9 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import { HiMagnifyingGlass, HiXMark, HiSun, HiMoon, HiBars3 } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
 import { movies, sports } from "../data/movies";
-
 const allContent = [...movies, ...sports];
-
 function Header() {
   const { searchQuery, setSearchQuery, openModal, setShowPlansModal, language, setLanguage, t } = useAppContext();
   const { isDarkMode, toggleTheme } = useTheme();
@@ -18,7 +16,6 @@ function Header() {
   const [langOpen, setLangOpen] = useState(false);
   const searchRef = useRef(null);
   const langRef = useRef(null);
-
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
     const handleClickOutside = (e) => {
@@ -36,7 +33,6 @@ function Header() {
       window.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
   const navItems = [
     { title: t("home"),    path: "/home" },
     { title: t("tv"),      path: "/tv" },
@@ -44,13 +40,11 @@ function Header() {
     { title: t("sports"),  path: "/sports" },
     { title: t("premium"), path: "/premium" },
   ];
-
   const searchResults = searchQuery
     ? allContent
         .filter(m => m.title.toLowerCase().includes(searchQuery.toLowerCase()))
         .slice(0, 6)
     : [];
-
   return (
     <header
       style={{
@@ -72,10 +66,9 @@ function Header() {
         borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
       }}
     >
-      {/* LEFT — Logo + Nav */}
+      {}
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        
-        {/* Hamburger Menu Icon (Mobile Only) */}
+        {}
         <button
           className="md:hidden"
           onClick={() => setMobileMenuOpen(true)}
@@ -91,8 +84,7 @@ function Header() {
         >
           <HiBars3 />
         </button>
-
-        {/* Logo */}
+        {}
         <Link
           to="/home"
           style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
@@ -110,8 +102,7 @@ function Header() {
             hotstar
           </span>
         </Link>
-
-        {/* Nav (Desktop Only) */}
+        {}
         <nav className="hidden md:flex" style={{ gap: "28px", marginLeft: "20px" }}>
           {navItems.map(item => (
             <NavLink
@@ -137,11 +128,9 @@ function Header() {
           ))}
         </nav>
       </div>
-
-      {/* RIGHT — Search + Language + Subscribe + Avatar */}
+      {}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-
-        {/* Search */}
+        {}
         <div ref={searchRef} style={{ position: "relative" }}>
           {searchOpen ? (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -196,8 +185,7 @@ function Header() {
             </button>
           )}
         </div>
-
-        {/* Language (Hidden on mobile) */}
+        {}
         <div ref={langRef} style={{ position: "relative" }} className="hidden md:block">
           <div
             onClick={() => setLangOpen(!langOpen)}
@@ -227,8 +215,7 @@ function Header() {
               ▼
             </span>
           </div>
-
-          {/* Language Dropdown */}
+          {}
           {langOpen && (
             <div
               style={{
@@ -274,8 +261,7 @@ function Header() {
             </div>
           )}
         </div>
-
-        {/* Theme Toggle */}
+        {}
         <button 
           onClick={toggleTheme}
           style={{
@@ -295,16 +281,14 @@ function Header() {
         >
           {isDarkMode ? <HiSun /> : <HiMoon />}
         </button>
-
-        {/* Subscribe (Hidden on mobile) */}
+        {}
         <button
           className="subscribe-btn hidden md:block"
           onClick={() => setShowPlansModal && setShowPlansModal(true)}
         >
           {t("subscribe")}
         </button>
-
-        {/* Watchlist Avatar */}
+        {}
         <Link
           to="/watchlist"
           style={{
@@ -330,8 +314,7 @@ function Header() {
           {t("watchlist").substring(0, 2).toUpperCase()}
         </Link>
       </div>
-
-      {/* Mobile Hamburger Drawer */}
+      {}
       <div 
         className="md:hidden"
         style={{
@@ -357,7 +340,6 @@ function Header() {
             <HiXMark />
           </button>
         </div>
-
         <nav style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           {navItems.map((link) => (
             <NavLink
@@ -391,7 +373,6 @@ function Header() {
             {t("watchlist")}
           </NavLink>
         </nav>
-        
         <button
           className="subscribe-btn"
           style={{ width: "100%", marginTop: "32px" }}
@@ -403,8 +384,7 @@ function Header() {
           {t("subscribeNow")}
         </button>
       </div>
-
-      {/* Mobile Drawer Overlay */}
+      {}
       {mobileMenuOpen && (
         <div 
           className="md:hidden"
@@ -423,5 +403,4 @@ function Header() {
     </header>
   );
 }
-
 export default Header;

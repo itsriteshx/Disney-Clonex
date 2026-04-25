@@ -5,19 +5,15 @@ import Modals from "./GlobalModal";
 import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
-
 function Profile() {
   const { watchlist, t } = useAppContext();
   const navigate = useNavigate();
-
   return (
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
-
       <main style={{ paddingTop: "72px", padding: "110px 4% 60px" }}>
         <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-
-          {/* Profile header */}
+          {}
           <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "48px" }} className="animate-fade-in">
             <div style={{
               width: "72px", height: "72px", borderRadius: "50%",
@@ -35,8 +31,7 @@ function Profile() {
               <p style={{ color: "#aaa", fontSize: "14px", margin: 0 }}>{t("manageWatchlist")}</p>
             </div>
           </div>
-
-          {/* Watchlist */}
+          {}
           <section>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
               <h2 style={{ fontSize: "22px", fontWeight: 800, margin: 0 }}>{t("myWatchlist")}</h2>
@@ -48,7 +43,6 @@ function Profile() {
                 {watchlist.length}
               </span>
             </div>
-
             {watchlist.length > 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
                 {watchlist.map(movie => (
@@ -88,15 +82,12 @@ function Profile() {
             )}
           </section>
         </div>
-
         <div style={{ marginTop: "60px" }}>
           <Footer />
         </div>
       </main>
-
       <Modals />
     </div>
   );
 }
-
 export default Profile;

@@ -1,17 +1,14 @@
 import { useAppContext } from '../context/AppContext';
 import { HiXMark, HiPlay, HiPlus, HiCheck, HiShare } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
-
 const PLANS = [
   { name: "Mobile",  price: "₹299",  quality: "HD (720p)",         devices: 1, ads: "With Ads",                  highlight: false },
   { name: "Super",   price: "₹899",  quality: "Full HD (1080p)",    devices: 2, ads: "Ad-free (Except Sports)",   highlight: false },
   { name: "Premium", price: "₹1499", quality: "4K (2160p) + HDR",   devices: 4, ads: "Completely Ad-free",        highlight: true  },
 ];
-
 function PlansModal() {
   const { showPlansModal, setShowPlansModal, t } = useAppContext();
   if (!showPlansModal) return null;
-
   return (
     <div
       style={{
@@ -47,14 +44,12 @@ function PlansModal() {
         >
           <HiXMark />
         </button>
-
         <h2 style={{ textAlign: "center", fontSize: "28px", fontWeight: 900, marginBottom: "8px", color: "white" }}>
           {t("subscribeToHotstar")}
         </h2>
         <p style={{ textAlign: "center", color: "#aaa", marginBottom: "36px", fontSize: "15px" }}>
           {t("choosePlan")}
         </p>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
           {PLANS.map(plan => (
             <div
@@ -112,15 +107,11 @@ function PlansModal() {
     </div>
   );
 }
-
 function GlobalModal() {
   const { modalState, closeModal, toggleWatchlist, watchlist, openModal, t } = useAppContext();
   const { isOpen, movie, type } = modalState;
-
   if (!isOpen || !movie) return null;
-
   const isWatched = watchlist.find(m => m.id === movie.id);
-
   return (
     <div
       style={{
@@ -128,7 +119,7 @@ function GlobalModal() {
         display: "flex", alignItems: "flex-end", justifyContent: "center",
       }}
     >
-      {/* Backdrop */}
+      {}
       <div
         onClick={closeModal}
         style={{
@@ -138,8 +129,7 @@ function GlobalModal() {
           animation: "fadeIn 0.3s ease",
         }}
       />
-
-      {/* Modal */}
+      {}
       <div
         style={{
           position: "relative",
@@ -157,7 +147,7 @@ function GlobalModal() {
           flexDirection: "row",
         }}
       >
-        {/* Close */}
+        {}
         <button
           onClick={closeModal}
           style={{
@@ -173,7 +163,6 @@ function GlobalModal() {
         >
           <HiXMark />
         </button>
-
         {type === "trailer" ? (
           <div style={{ width: "100%", height: "100%", background: "#000" }}>
             <iframe
@@ -187,7 +176,7 @@ function GlobalModal() {
           </div>
         ) : (
           <>
-            {/* Left — backdrop */}
+            {}
             <div style={{ width: "60%", height: "100%", position: "relative", flexShrink: 0 }}>
               <img
                 src={movie.backdrop || movie.image || movie.poster}
@@ -200,8 +189,7 @@ function GlobalModal() {
                 background: "linear-gradient(to right, transparent 60%, #0d0117 100%), linear-gradient(to top, #0d0117 0%, transparent 40%)",
               }} />
             </div>
-
-            {/* Right — info */}
+            {}
             <div
               style={{
                 flex: 1,
@@ -224,14 +212,12 @@ function GlobalModal() {
                   {movie.year} • 4K • HDR
                 </span>
               </div>
-
               <h2 style={{
                 fontSize: "clamp(32px,4vw,52px)", fontWeight: 900,
                 color: "white", marginBottom: "16px", lineHeight: 1.1, letterSpacing: "-0.5px",
               }}>
                 {movie.title}
               </h2>
-
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "20px", flexWrap: "wrap" }}>
                 <span style={{
                   background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)",
@@ -245,20 +231,17 @@ function GlobalModal() {
                 <span style={{ color: "#aaa" }}>•</span>
                 <span style={{ color: "#aaa", fontSize: "13px" }}>2h 15m</span>
               </div>
-
               {(movie.genre || "").split("•").map((g, i) => (
                 <span key={i} className="genre-pill" style={{ display: "inline-block", marginRight: "8px", marginBottom: "12px" }}>
                   {g.trim()}
                 </span>
               ))}
-
               <p style={{
                 color: "#aaaaaa", fontSize: "15px", lineHeight: 1.7,
                 marginBottom: "32px", marginTop: "8px",
               }}>
                 {movie.description}
               </p>
-
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                 <button
                   onClick={() => openModal(movie, "trailer")}
@@ -307,8 +290,6 @@ function GlobalModal() {
     </div>
   );
 }
-
-// Export both, but default export wraps both
 function Modals() {
   return (
     <>
@@ -317,5 +298,4 @@ function Modals() {
     </>
   );
 }
-
 export default Modals;

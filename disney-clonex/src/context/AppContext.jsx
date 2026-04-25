@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { getTranslation } from '../utils/translations';
-
 const AppContext = createContext();
-
 export const AppProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showPlansModal, setShowPlansModal] = useState(false);
@@ -20,27 +18,21 @@ export const AppProvider = ({ children }) => {
     movie: null,
     type: 'detail',
   });
-
   useEffect(() => {
     localStorage.setItem('hotstar_watchlist', JSON.stringify(watchlist));
   }, [watchlist]);
-
   useEffect(() => {
     localStorage.setItem('hotstar_language', language);
   }, [language]);
-
   const toggleWatchlist = (movie) => {
     setWatchlist(prev => {
       const exists = prev.find(m => m.id === movie.id);
       return exists ? prev.filter(m => m.id !== movie.id) : [...prev, movie];
     });
   };
-
   const openModal  = (movie, type = 'detail') => setModalState({ isOpen: true, movie, type });
   const closeModal = () => setModalState(s => ({ ...s, isOpen: false }));
-
   const t = (key, params) => getTranslation(language, key, params);
-
   return (
     <AppContext.Provider
       value={{
@@ -62,5 +54,4 @@ export const AppProvider = ({ children }) => {
     </AppContext.Provider>
   );
 };
-
 export const useAppContext = () => useContext(AppContext);

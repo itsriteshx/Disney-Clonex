@@ -6,23 +6,18 @@ import Footer from "./Footer";
 import Modals from "./GlobalModal";
 import { SkeletonHero, SkeletonCard } from "./Skeleton";
 import { useAppContext } from "../context/AppContext";
-
 function Home() {
   const { searchQuery, t } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
-
-  // Simulate network delay for skeleton loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500); // 1.5s delay
+    }, 1500); 
     return () => clearTimeout(timer);
   }, []);
-
   return (
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
-
       <main style={{ paddingTop: "72px" }}>
         {isLoading ? (
           <div className="pt-20">
@@ -39,38 +34,28 @@ function Home() {
         ) : (
           <>
             {!searchQuery && <ImageSlider />}
-
             <div style={{ paddingTop: "20px" }}>
-              {/* 🔴 Live & Upcoming */}
+              {}
               <MovieRow title={t("liveUpcoming")} type="sports" />
-
-              {/* 🎬 Featured Today */}
+              {}
               <MovieRow title={t("featuredToday")} type="movie" filterBrand="marvel" />
-
-              {/* ⭐ Hotstar Specials */}
+              {}
               <MovieRow title={t("hotstarSpecials")} filterBrand="hotstar" />
-
-              {/* 🎯 Top Picks For You */}
+              {}
               <MovieRow title={t("topPicks")} type="movie" />
-
-              {/* 🎥 Bollywood Hits */}
+              {}
               <MovieRow title={t("bollywoodHits")} filterBrand="bollywood" />
-
-              {/* 🏆 Sports */}
+              {}
               <MovieRow title={t("sports")} type="sports" />
-
-              {/* 🌍 International */}
+              {}
               <MovieRow title={t("international")} filterBrand="international" />
             </div>
           </>
         )}
-
         <Footer />
       </main>
-
       <Modals />
     </div>
   );
 }
-
 export default Home;

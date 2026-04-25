@@ -1,9 +1,4 @@
-// ─── All image URLs are 100% verified working ────────────────────────────────
-// Using TMDB w500 poster paths confirmed as of 2025
-
 export const movies = [
-
-  // ── HERO SLIDER (need backdrop) ───────────────────────────────────────────
   {
     id: 1,
     title: "Avengers: Endgame",
@@ -61,8 +56,6 @@ export const movies = [
     genre: "Action • Fantasy",
     trailer: "https://www.youtube.com/embed/Lt-U_t2pUHI",
   },
-
-  // ── MORE MARVEL MOVIES ────────────────────────────────────────────────────
   {
     id: 6,
     title: "Black Widow",
@@ -114,8 +107,6 @@ export const movies = [
     rating: "7.3", brand: "marvel", type: "movie", year: "2015",
     genre: "Action • Comedy",
   },
-
-  // ── BOLLYWOOD / HINDI ─────────────────────────────────────────────────────
   {
     id: 501,
     title: "RRR",
@@ -148,8 +139,6 @@ export const movies = [
     genre: "Action • Thriller",
     isNew: true,
   },
-
-  // ── TV SHOWS / HOTSTAR SPECIALS ───────────────────────────────────────────
   {
     id: 7,
     title: "The Mandalorian",
@@ -212,8 +201,6 @@ export const movies = [
     rating: "7.5", brand: "hotstar", type: "tv", year: "2021",
     genre: "Action • Drama",
   },
-
-  // ── INTERNATIONAL ─────────────────────────────────────────────────────────
   {
     id: 401,
     title: "Money Heist",
@@ -276,9 +263,6 @@ export const movies = [
     genre: "Fantasy • Drama",
   },
 ];
-
-// ─── Sports data ─────────────────────────────────────────────────────────────
-// Using Unsplash sports photos — fully public, no auth needed
 export const sports = [
   {
     id: "s1",

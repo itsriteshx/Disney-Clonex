@@ -3,27 +3,19 @@ import { movies } from "../data/movies";
 import { useAppContext } from "../context/AppContext";
 import { HiPlay, HiPlus, HiCheck } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
-
-
 const heroMovies = movies.filter(m => m.backdrop).slice(0, 5);
-
 function ImageSlider() {
   const [current, setCurrent] = useState(0);
   const { openModal, toggleWatchlist, watchlist } = useAppContext();
-
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent(prev => (prev + 1) % heroMovies.length);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-
   if (!heroMovies.length) return null;
-
   const movie = heroMovies[current];
   const isWatched = watchlist.find(m => m.id === movie.id);
-
   return (
     <section
       style={{
@@ -34,7 +26,7 @@ function ImageSlider() {
         background: "#0d0117",
       }}
     >
-      {/* Slides */}
+      {}
       {heroMovies.map((m, i) => (
         <div
           key={m.id}
@@ -54,11 +46,7 @@ function ImageSlider() {
           />
         </div>
       ))}
-
-
       <div className="hero-overlay" style={{ zIndex: 3 }} />
-
-
       <div
         style={{
           position: "absolute",
@@ -74,14 +62,13 @@ function ImageSlider() {
           className="animate-fade-in"
           style={{ maxWidth: "580px" }}
         >
-          {/* Genre tags */}
+          {}
           <div style={{ display: "flex", gap: "8px", marginBottom: "14px", flexWrap: "wrap" }}>
             {(movie.genre || "").split("•").map((g, i) => (
               <span key={i} className="genre-pill">{g.trim()}</span>
             ))}
           </div>
-
-          {/* Title */}
+          {}
           <h1
             style={{
               fontSize: "clamp(36px, 5vw, 56px)",
@@ -94,8 +81,7 @@ function ImageSlider() {
           >
             {movie.title}
           </h1>
-
-          {/* Meta */}
+          {}
           <div
             style={{
               display: "flex",
@@ -121,7 +107,7 @@ function ImageSlider() {
             <span style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>{movie.year || "2024"}</span>
             <span style={{ color: "#aaa" }}>•</span>
             <span style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>2h 15m</span>
-            {/* Rating badge */}
+            {}
             <span
               style={{
                 display: "flex",
@@ -135,8 +121,7 @@ function ImageSlider() {
               <AiFillStar /> {movie.rating}
             </span>
           </div>
-
-          {/* Description */}
+          {}
           <p
             style={{
               color: "#aaaaaa",
@@ -151,8 +136,7 @@ function ImageSlider() {
           >
             {movie.description}
           </p>
-
-          {/* CTA Buttons */}
+          {}
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
             <button
               onClick={() => openModal(movie, "trailer")}
@@ -163,7 +147,6 @@ function ImageSlider() {
             >
               <HiPlay style={{ fontSize: "22px" }} /> Watch Now
             </button>
-
             <button
               onClick={() => toggleWatchlist(movie)}
               className="pill-btn"
@@ -181,8 +164,7 @@ function ImageSlider() {
           </div>
         </div>
       </div>
-
-      {/* Dot Indicators */}
+      {}
       <div
         style={{
           position: "absolute",
@@ -213,5 +195,4 @@ function ImageSlider() {
     </section>
   );
 }
-
 export default ImageSlider;

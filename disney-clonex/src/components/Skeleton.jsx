@@ -1,9 +1,7 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-
 export function SkeletonCard() {
   const { isDarkMode } = useTheme();
-  
   return (
     <div
       style={{
@@ -33,10 +31,8 @@ export function SkeletonCard() {
     </div>
   );
 }
-
 export function SkeletonHero() {
   const { isDarkMode } = useTheme();
-
   return (
     <div
       style={{

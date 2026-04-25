@@ -4,7 +4,6 @@ import Footer from "./Footer";
 import Modals from "./GlobalModal";
 import { HiCheck } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
-
 const plans = [
   {
     name: "Mobile",
@@ -37,7 +36,6 @@ const plans = [
     features: ["4 Devices", "4K + HDR", "Completely Ad-free", "All Sports", "Dolby Atmos", "IMAX Enhanced"],
   },
 ];
-
 const featureRows = [
   { label: "All Content (Movies, TV, Live Sports)", mobile: true, super: true, premium: true },
   { label: "Watch on TV & Laptop",                  mobile: false, super: true, premium: true },
@@ -48,22 +46,18 @@ const featureRows = [
   { label: "Number of Devices",                     mobile: "1",   super: "2",   premium: "4"  },
   { label: "Max Video Quality",                     mobile: "HD",  super: "Full HD", premium: "4K" },
 ];
-
 function Tick({ val }) {
   if (val === true)  return <span style={{ color: "#8B2FC9", fontSize: "20px" }}>✓</span>;
   if (val === false) return <span style={{ color: "#555",   fontSize: "18px" }}>✕</span>;
   return <span style={{ color: "white", fontWeight: 700, fontSize: "13px" }}>{val}</span>;
 }
-
 function Premium() {
   const [hovered, setHovered] = useState(null);
-
   return (
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
-
       <main style={{ paddingTop: "72px" }}>
-        {/* Hero Section */}
+        {}
         <div
           style={{
             textAlign: "center",
@@ -84,8 +78,7 @@ function Premium() {
             Unlock all content. Choose the plan that's right for you.
           </p>
         </div>
-
-        {/* Plans Grid */}
+        {}
         <div
           style={{
             display: "grid",
@@ -137,18 +130,15 @@ function Premium() {
                   ⭐ BEST EXPERIENCE
                 </span>
               )}
-
               <h3 style={{ fontSize: "22px", fontWeight: 900, marginBottom: "6px", marginTop: plan.highlight ? "10px" : "0" }}>
                 {plan.name}
               </h3>
-
               <div style={{ marginBottom: "24px" }}>
                 <span style={{ fontSize: "36px", fontWeight: 900, color: plan.highlight ? "#8B2FC9" : "#f5a623" }}>
                   {plan.price}
                 </span>
                 <span style={{ color: "#aaa", fontSize: "14px" }}>/{plan.period}</span>
               </div>
-
               <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px", width: "100%" }}>
                 {plan.features.map((f, fi) => (
                   <li
@@ -165,7 +155,6 @@ function Premium() {
                   </li>
                 ))}
               </ul>
-
               <button
                 style={{
                   width: "100%", padding: "14px",
@@ -187,8 +176,7 @@ function Premium() {
             </div>
           ))}
         </div>
-
-        {/* Feature Comparison Table */}
+        {}
         <div style={{ maxWidth: "900px", margin: "0 auto 60px", padding: "0 4%" }}>
           <h2 style={{ textAlign: "center", marginBottom: "28px", fontSize: "22px", fontWeight: 800 }}>
             Plan Comparison
@@ -230,13 +218,10 @@ function Premium() {
             </table>
           </div>
         </div>
-
         <Footer />
       </main>
-
       <Modals />
     </div>
   );
 }
-
 export default Premium;

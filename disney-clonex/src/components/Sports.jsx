@@ -3,15 +3,13 @@ import Footer from "./Footer";
 import MovieRow from "./MovieRow";
 import Modals from "./GlobalModal";
 import { useAppContext } from "../context/AppContext";
-
 function Sports() {
   const { t } = useAppContext();
   return (
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
-
       <main style={{ paddingTop: "72px" }}>
-        {/* Live Match Hero Banner */}
+        {}
         <section
           style={{
             position: "relative",
@@ -21,7 +19,7 @@ function Sports() {
             background: "linear-gradient(135deg, #0d0117 0%, #1a0533 50%, #0d1a2e 100%)",
           }}
         >
-          {/* Stadium background image with overlay */}
+          {}
           <img
             src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1400&q=80"
             alt="Sports"
@@ -40,8 +38,7 @@ function Sports() {
               background: "linear-gradient(to top, rgba(13,1,23,1) 0%, transparent 50%)",
             }}
           />
-
-          {/* Content */}
+          {}
           <div
             style={{
               position: "absolute", inset: 0,
@@ -50,7 +47,7 @@ function Sports() {
             }}
           >
             <div className="animate-fade-in">
-              {/* LIVE badge */}
+              {}
               <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
                 <div className="live-badge">
                   <span className="live-dot" />
@@ -60,7 +57,6 @@ function Sports() {
                   Border-Gavaskar Trophy
                 </span>
               </div>
-
               <h1
                 style={{
                   fontSize: "clamp(36px, 5vw, 60px)",
@@ -73,8 +69,7 @@ function Sports() {
               >
                 India vs Australia
               </h1>
-
-              {/* Score */}
+              {}
               <div
                 style={{
                   display: "flex",
@@ -93,8 +88,7 @@ function Sports() {
                   <div style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>Session 2</div>
                 </div>
               </div>
-
-              {/* CTA */}
+              {}
               <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
                 <button
                   className="pill-btn"
@@ -116,20 +110,16 @@ function Sports() {
             </div>
           </div>
         </section>
-
-        {/* Content Rows */}
+        {}
         <div style={{ paddingBottom: "40px" }}>
           <MovieRow title={t("cricket")} type="sports" />
           <MovieRow title={t("football")} type="sports" />
           <MovieRow title={t("kabaddi")} type="sports" />
         </div>
-
         <Footer />
       </main>
-
       <Modals />
     </div>
   );
 }
-
 export default Sports;

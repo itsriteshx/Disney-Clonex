@@ -1,17 +1,14 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useAppContext } from "../context/AppContext";
-
 const socialIcons = [
   { icon: <FaFacebookF />, href: "#" },
   { icon: <FaTwitter />,   href: "#" },
   { icon: <FaInstagram />, href: "#" },
   { icon: <FaYoutube />,   href: "#" },
 ];
-
 function Footer() {
   const { t } = useAppContext();
-  
   const footerLinks = [
     { key: "aboutHotstar", label: t("aboutHotstar") },
     { key: "termsOfUse",   label: t("termsOfUse") },
@@ -20,7 +17,6 @@ function Footer() {
     { key: "feedback",      label: t("feedback") },
     { key: "careers",       label: t("careers") },
   ];
-
   return (
     <footer
       style={{
@@ -39,17 +35,16 @@ function Footer() {
           marginBottom: "40px",
         }}
       >
-        {/* Left — links + copyright */}
+        {}
         <div style={{ maxWidth: "600px" }}>
-          {/* Logo */}
+          {}
           <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}>
             <AiFillStar style={{ color: "#f5a623", fontSize: "22px" }} />
             <span style={{ fontSize: "22px", fontWeight: 900, color: "white", letterSpacing: "-0.3px" }}>
               hotstar
             </span>
           </div>
-
-          {/* Links */}
+          {}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 24px", marginBottom: "24px" }}>
             {footerLinks.map(link => (
               <a
@@ -69,15 +64,13 @@ function Footer() {
               </a>
             ))}
           </div>
-
           <p style={{ color: "#555", fontSize: "11px", lineHeight: 1.8, maxWidth: "520px" }}>
             {t("copyright")}
           </p>
         </div>
-
-        {/* Right — social + app badges */}
+        {}
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-          {/* Social */}
+          {}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
               {t("connect")}
@@ -108,8 +101,7 @@ function Footer() {
               </a>
             ))}
           </div>
-
-          {/* App badges */}
+          {}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
               {t("download")}
@@ -138,5 +130,4 @@ function Footer() {
     </footer>
   );
 }
-
 export default Footer;

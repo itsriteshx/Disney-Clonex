@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
-
 function Login() {
   const navigate = useNavigate();
-
   return (
     <div
       style={{
@@ -17,7 +15,7 @@ function Login() {
         position: "relative",
       }}
     >
-      {/* Background */}
+      {}
       <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <img
           src="https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg"
@@ -27,8 +25,7 @@ function Login() {
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #0d0117 30%, rgba(13,1,23,0.7) 100%)" }} />
       </div>
-
-      {/* Card */}
+      {}
       <div
         className="animate-modal-up"
         style={{
@@ -44,18 +41,16 @@ function Login() {
           boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
         }}
       >
-        {/* Logo */}
+        {}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "32px" }}>
           <AiFillStar style={{ color: "#f5a623", fontSize: "36px", marginBottom: "8px" }} />
           <h1 style={{ fontSize: "32px", fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>
             hotstar
           </h1>
         </div>
-
         <h2 style={{ textAlign: "center", fontSize: "18px", fontWeight: 800, marginBottom: "28px", color: "white", letterSpacing: "0.04em", textTransform: "uppercase" }}>
           Welcome Back
         </h2>
-
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div>
             <label style={{ display: "block", fontSize: "11px", fontWeight: 800, color: "#aaa", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>
@@ -80,7 +75,6 @@ function Login() {
               onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
             />
           </div>
-
           <button
             onClick={() => {
               localStorage.setItem("user", JSON.stringify({ loggedIn: true, username: "User" }));
@@ -107,7 +101,6 @@ function Login() {
             LOG IN
           </button>
         </div>
-
         <p style={{ textAlign: "center", color: "#aaa", fontSize: "13px", marginTop: "24px" }}>
           New to Hotstar?{" "}
           <span
@@ -121,5 +114,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;

@@ -114,7 +114,6 @@ export const translations = {
     copyright: "© 2025 हॉटस्टार। सर्वाधिकार सुरक्षित। हॉटस्टार पर उपलब्ध सामग्री लाइसेंस के अधीन है। हॉटस्टार स्टार इंडिया प्राइवेट लिमिटेड का एक ब्रांड है। सर्वाधिकार सुरक्षित।",
   }
 };
-
 export const getTranslation = (lang, key, params = {}) => {
   let text = translations[lang]?.[key] || translations["English"][key] || key;
   Object.keys(params).forEach(param => {
