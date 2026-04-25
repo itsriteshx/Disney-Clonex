@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-import { HiMagnifyingGlass, HiXMark } from "react-icons/hi2";
+import { useTheme } from "../context/ThemeContext";
+import { HiMagnifyingGlass, HiXMark, HiSun, HiMoon } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
 import { movies, sports } from "../data/movies";
 
@@ -9,6 +10,7 @@ const allContent = [...movies, ...sports];
 
 function Header() {
   const { searchQuery, setSearchQuery, openModal, setShowPlansModal } = useAppContext();
+  const { isDarkMode, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const searchRef = useRef(null);
@@ -240,6 +242,27 @@ function Header() {
         >
           English <span style={{ fontSize: "9px", opacity: 0.6 }}>▼</span>
         </div>
+
+        {/* Theme Toggle */}
+        <button 
+          onClick={toggleTheme}
+          style={{
+            background: "none",
+            border: "none",
+            color: isDarkMode ? "white" : "#1a1d29",
+            cursor: "pointer",
+            fontSize: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            opacity: 0.8,
+            transition: "all 0.3s ease"
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = 1}
+          onMouseLeave={e => e.currentTarget.style.opacity = 0.8}
+        >
+          {isDarkMode ? <HiSun /> : <HiMoon />}
+        </button>
 
         {/* Subscribe */}
         <button

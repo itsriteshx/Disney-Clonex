@@ -4,15 +4,19 @@ import ImageSlider from "../components/ImageSlider";
 import MovieRow from "../components/MovieRow";
 import Footer from "../components/Footer";
 import Modals from "../components/GlobalModal";
+import { SkeletonHero, SkeletonCard } from "../components/Skeleton";
 import { useAppContext } from "../context/AppContext";
 
 function Home() {
-  const [loading, setLoading] = useState(true);
   const { searchQuery } = useAppContext();
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Simulate network delay for skeleton loading
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 600);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // 1.5s delay
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -20,19 +24,17 @@ function Home() {
       <Header />
 
       <main style={{ paddingTop: "72px" }}>
-        {loading ? (
-          <div style={{ padding: "0 4%", paddingTop: "20px" }}>
-            <div style={{ width: "100%", height: "520px", background: "rgba(255,255,255,0.04)", borderRadius: "12px", animation: "pulse 1.5s infinite" }} />
-            {[1, 2, 3].map(i => (
-              <div key={i} style={{ marginTop: "40px" }}>
-                <div style={{ width: "220px", height: "24px", background: "rgba(255,255,255,0.04)", borderRadius: "8px", marginBottom: "16px" }} />
-                <div style={{ display: "flex", gap: "12px", overflow: "hidden" }}>
-                  {[1,2,3,4,5,6].map(j => (
-                    <div key={j} style={{ width: "220px", aspectRatio: "16/9", background: "rgba(255,255,255,0.04)", borderRadius: "8px", flexShrink: 0 }} />
-                  ))}
-                </div>
-              </div>
-            ))}
+        {isLoading ? (
+          <div className="pt-20">
+            <SkeletonHero />
+            <div className="px-10 mt-8 mb-6 text-xl font-bold">🔴 Live & Upcoming</div>
+            <div className="px-10 flex gap-4 overflow-hidden mb-12">
+              {[1, 2, 3, 4, 5, 6].map((i) => <SkeletonCard key={i} />)}
+            </div>
+            <div className="px-10 mb-6 text-xl font-bold">🎬 Featured Today</div>
+            <div className="px-10 flex gap-4 overflow-hidden">
+              {[1, 2, 3, 4, 5, 6].map((i) => <SkeletonCard key={i} />)}
+            </div>
           </div>
         ) : (
           <>
