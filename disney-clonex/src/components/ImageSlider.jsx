@@ -26,7 +26,6 @@ function ImageSlider() {
         background: "#0d0117",
       }}
     >
-      {}
       {heroMovies.map((m, i) => (
         <div
           key={m.id}
@@ -62,13 +61,11 @@ function ImageSlider() {
           className="animate-fade-in"
           style={{ maxWidth: "580px" }}
         >
-          {}
           <div style={{ display: "flex", gap: "8px", marginBottom: "14px", flexWrap: "wrap" }}>
             {(movie.genre || "").split("•").map((g, i) => (
               <span key={i} className="genre-pill">{g.trim()}</span>
             ))}
           </div>
-          {}
           <h1
             style={{
               fontSize: "clamp(36px, 5vw, 56px)",
@@ -81,7 +78,6 @@ function ImageSlider() {
           >
             {movie.title}
           </h1>
-          {}
           <div
             style={{
               display: "flex",
@@ -107,7 +103,6 @@ function ImageSlider() {
             <span style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>{movie.year || "2024"}</span>
             <span style={{ color: "#aaa" }}>•</span>
             <span style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>2h 15m</span>
-            {}
             <span
               style={{
                 display: "flex",
@@ -121,7 +116,6 @@ function ImageSlider() {
               <AiFillStar /> {movie.rating}
             </span>
           </div>
-          {}
           <p
             style={{
               color: "#aaaaaa",
@@ -136,7 +130,6 @@ function ImageSlider() {
           >
             {movie.description}
           </p>
-          {}
           <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
             <button
               onClick={() => openModal(movie, "trailer")}
@@ -164,7 +157,6 @@ function ImageSlider() {
           </div>
         </div>
       </div>
-      {}
       <div
         style={{
           position: "absolute",

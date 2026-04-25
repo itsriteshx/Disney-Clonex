@@ -15,7 +15,6 @@ function Login() {
         position: "relative",
       }}
     >
-      {}
       <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <img
           src="https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg"
@@ -25,7 +24,6 @@ function Login() {
         />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #0d0117 30%, rgba(13,1,23,0.7) 100%)" }} />
       </div>
-      {}
       <div
         className="animate-modal-up"
         style={{
@@ -41,7 +39,6 @@ function Login() {
           boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
         }}
       >
-        {}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "32px" }}>
           <AiFillStar style={{ color: "#f5a623", fontSize: "36px", marginBottom: "8px" }} />
           <h1 style={{ fontSize: "32px", fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>

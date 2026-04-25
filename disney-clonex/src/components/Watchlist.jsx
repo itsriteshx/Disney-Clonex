@@ -13,7 +13,6 @@ function Profile() {
       <Header />
       <main style={{ paddingTop: "72px", padding: "110px 4% 60px" }}>
         <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-          {}
           <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "48px" }} className="animate-fade-in">
             <div style={{
               width: "72px", height: "72px", borderRadius: "50%",
@@ -31,7 +30,6 @@ function Profile() {
               <p style={{ color: "#aaa", fontSize: "14px", margin: 0 }}>{t("manageWatchlist")}</p>
             </div>
           </div>
-          {}
           <section>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
               <h2 style={{ fontSize: "22px", fontWeight: 800, margin: 0 }}>{t("myWatchlist")}</h2>

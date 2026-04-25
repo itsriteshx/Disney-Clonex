@@ -119,7 +119,6 @@ function GlobalModal() {
         display: "flex", alignItems: "flex-end", justifyContent: "center",
       }}
     >
-      {}
       <div
         onClick={closeModal}
         style={{
@@ -129,7 +128,6 @@ function GlobalModal() {
           animation: "fadeIn 0.3s ease",
         }}
       />
-      {}
       <div
         style={{
           position: "relative",
@@ -147,7 +145,6 @@ function GlobalModal() {
           flexDirection: "row",
         }}
       >
-        {}
         <button
           onClick={closeModal}
           style={{
@@ -176,7 +173,6 @@ function GlobalModal() {
           </div>
         ) : (
           <>
-            {}
             <div style={{ width: "60%", height: "100%", position: "relative", flexShrink: 0 }}>
               <img
                 src={movie.backdrop || movie.image || movie.poster}
@@ -189,7 +185,6 @@ function GlobalModal() {
                 background: "linear-gradient(to right, transparent 60%, #0d0117 100%), linear-gradient(to top, #0d0117 0%, transparent 40%)",
               }} />
             </div>
-            {}
             <div
               style={{
                 flex: 1,

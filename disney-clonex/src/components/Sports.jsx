@@ -9,7 +9,6 @@ function Sports() {
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
       <main style={{ paddingTop: "72px" }}>
-        {}
         <section
           style={{
             position: "relative",
@@ -19,7 +18,6 @@ function Sports() {
             background: "linear-gradient(135deg, #0d0117 0%, #1a0533 50%, #0d1a2e 100%)",
           }}
         >
-          {}
           <img
             src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1400&q=80"
             alt="Sports"
@@ -38,7 +36,6 @@ function Sports() {
               background: "linear-gradient(to top, rgba(13,1,23,1) 0%, transparent 50%)",
             }}
           />
-          {}
           <div
             style={{
               position: "absolute", inset: 0,
@@ -47,7 +44,6 @@ function Sports() {
             }}
           >
             <div className="animate-fade-in">
-              {}
               <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
                 <div className="live-badge">
                   <span className="live-dot" />
@@ -69,7 +65,6 @@ function Sports() {
               >
                 India vs Australia
               </h1>
-              {}
               <div
                 style={{
                   display: "flex",
@@ -88,7 +83,6 @@ function Sports() {
                   <div style={{ color: "#aaa", fontSize: "13px", fontWeight: 600 }}>Session 2</div>
                 </div>
               </div>
-              {}
               <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
                 <button
                   className="pill-btn"
@@ -110,7 +104,6 @@ function Sports() {
             </div>
           </div>
         </section>
-        {}
         <div style={{ paddingBottom: "40px" }}>
           <MovieRow title={t("cricket")} type="sports" />
           <MovieRow title={t("football")} type="sports" />

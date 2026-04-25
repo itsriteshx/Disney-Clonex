@@ -26,7 +26,6 @@ function Detail() {
   return (
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }}>
       <Header />
-      {}
       <div style={{ position: "fixed", top: 0, right: 0, width: "100%", height: "100vh", zIndex: 0 }}>
         <img
           src={movie.backdrop || movie.image || movie.poster}

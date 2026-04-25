@@ -66,9 +66,7 @@ function Header() {
         borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
       }}
     >
-      {}
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        {}
         <button
           className="md:hidden"
           onClick={() => setMobileMenuOpen(true)}
@@ -84,7 +82,6 @@ function Header() {
         >
           <HiBars3 />
         </button>
-        {}
         <Link
           to="/home"
           style={{ display: "flex", alignItems: "center", gap: "6px", textDecoration: "none" }}
@@ -102,7 +99,6 @@ function Header() {
             hotstar
           </span>
         </Link>
-        {}
         <nav className="hidden md:flex" style={{ gap: "28px", marginLeft: "20px" }}>
           {navItems.map(item => (
             <NavLink
@@ -128,9 +124,7 @@ function Header() {
           ))}
         </nav>
       </div>
-      {}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        {}
         <div ref={searchRef} style={{ position: "relative" }}>
           {searchOpen ? (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -185,7 +179,6 @@ function Header() {
             </button>
           )}
         </div>
-        {}
         <div ref={langRef} style={{ position: "relative" }} className="hidden md:block">
           <div
             onClick={() => setLangOpen(!langOpen)}
@@ -215,7 +208,6 @@ function Header() {
               ▼
             </span>
           </div>
-          {}
           {langOpen && (
             <div
               style={{
@@ -261,7 +253,6 @@ function Header() {
             </div>
           )}
         </div>
-        {}
         <button 
           onClick={toggleTheme}
           style={{
@@ -281,14 +272,12 @@ function Header() {
         >
           {isDarkMode ? <HiSun /> : <HiMoon />}
         </button>
-        {}
         <button
           className="subscribe-btn hidden md:block"
           onClick={() => setShowPlansModal && setShowPlansModal(true)}
         >
           {t("subscribe")}
         </button>
-        {}
         <Link
           to="/watchlist"
           style={{
@@ -314,7 +303,6 @@ function Header() {
           {t("watchlist").substring(0, 2).toUpperCase()}
         </Link>
       </div>
-      {}
       <div 
         className="md:hidden"
         style={{
@@ -384,7 +372,6 @@ function Header() {
           {t("subscribeNow")}
         </button>
       </div>
-      {}
       {mobileMenuOpen && (
         <div 
           className="md:hidden"

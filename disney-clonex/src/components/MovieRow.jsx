@@ -40,7 +40,6 @@ function MovieRow({ title, type, filterBrand, isLive, movies: propMovies, showSe
       style={{ padding: "16px 4%", position: "relative" }}
       className="group-row"
     >
-      {}
       <div
         style={{
           display: "flex",
@@ -79,9 +78,7 @@ function MovieRow({ title, type, filterBrand, isLive, movies: propMovies, showSe
           </a>
         )}
       </div>
-      {}
       <div style={{ position: "relative" }}>
-        {}
         {showLeft && (
           <button
             onClick={() => scroll("left")}
@@ -90,7 +87,6 @@ function MovieRow({ title, type, filterBrand, isLive, movies: propMovies, showSe
             <HiChevronLeft style={{ fontSize: "26px" }} />
           </button>
         )}
-        {}
         <div
           ref={rowRef}
           onScroll={handleScroll}
@@ -110,7 +106,6 @@ function MovieRow({ title, type, filterBrand, isLive, movies: propMovies, showSe
             </div>
           ))}
         </div>
-        {}
         {showRight && (
           <button
             onClick={() => scroll("right")}

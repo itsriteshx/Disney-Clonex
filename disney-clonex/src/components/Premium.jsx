@@ -57,7 +57,6 @@ function Premium() {
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
       <main style={{ paddingTop: "72px" }}>
-        {}
         <div
           style={{
             textAlign: "center",
@@ -78,7 +77,6 @@ function Premium() {
             Unlock all content. Choose the plan that's right for you.
           </p>
         </div>
-        {}
         <div
           style={{
             display: "grid",
@@ -176,7 +174,6 @@ function Premium() {
             </div>
           ))}
         </div>
-        {}
         <div style={{ maxWidth: "900px", margin: "0 auto 60px", padding: "0 4%" }}>
           <h2 style={{ textAlign: "center", marginBottom: "28px", fontSize: "22px", fontWeight: 800 }}>
             Plan Comparison

@@ -25,7 +25,6 @@ function MovieCard({ movie }) {
       onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.08)"; e.currentTarget.style.zIndex = 100; }}
       onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.zIndex = "auto"; }}
     >
-      {}
       <div
         onClick={() => navigate(`/movie/${movie.id}`)}
         style={{
@@ -66,21 +65,18 @@ function MovieCard({ movie }) {
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
         )}
-        {}
         {movie.isLive && (
           <div className="live-badge" style={{ position: "absolute", top: "8px", left: "8px", zIndex: 5 }}>
             <span className="live-dot" />
             LIVE
           </div>
         )}
-        {}
         {movie.isNew && !movie.isLive && (
           <span className="new-badge" style={{ position: "absolute", top: "8px", left: "8px", zIndex: 5 }}>
             NEW
           </span>
         )}
       </div>
-      {}
       <div
         style={{
           position: "absolute",
@@ -97,7 +93,6 @@ function MovieCard({ movie }) {
         }}
         className="card-overlay"
       >
-        {}
         <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
           <button
             onClick={e => { e.stopPropagation(); navigate(`/movie/${movie.id}`); }}
@@ -141,7 +136,6 @@ function MovieCard({ movie }) {
             {isWatched ? <HiCheck style={{ fontSize: "14px" }} /> : <HiPlus style={{ fontSize: "14px" }} />}
           </button>
         </div>
-        {}
         <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "10px", marginBottom: "4px", display: "flex", gap: "6px" }}>
           <span>{movie.year || "2024"}</span>
           <span>•</span>

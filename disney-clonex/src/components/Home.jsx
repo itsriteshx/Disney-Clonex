@@ -35,19 +35,12 @@ function Home() {
           <>
             {!searchQuery && <ImageSlider />}
             <div style={{ paddingTop: "20px" }}>
-              {}
               <MovieRow title={t("liveUpcoming")} type="sports" />
-              {}
               <MovieRow title={t("featuredToday")} type="movie" filterBrand="marvel" />
-              {}
               <MovieRow title={t("hotstarSpecials")} filterBrand="hotstar" />
-              {}
               <MovieRow title={t("topPicks")} type="movie" />
-              {}
               <MovieRow title={t("bollywoodHits")} filterBrand="bollywood" />
-              {}
               <MovieRow title={t("sports")} type="sports" />
-              {}
               <MovieRow title={t("international")} filterBrand="international" />
             </div>
           </>

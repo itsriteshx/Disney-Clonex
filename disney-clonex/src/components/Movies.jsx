@@ -24,7 +24,6 @@ function Movies() {
       <main style={{ paddingTop: "72px" }}>
         {!searchQuery && <ImageSlider />}
         <div style={{ padding: "28px 4% 0" }}>
-          {}
           {!searchQuery && (
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "8px" }}>
               {GENRES.map(g => (

@@ -35,16 +35,13 @@ function Footer() {
           marginBottom: "40px",
         }}
       >
-        {}
         <div style={{ maxWidth: "600px" }}>
-          {}
           <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}>
             <AiFillStar style={{ color: "#f5a623", fontSize: "22px" }} />
             <span style={{ fontSize: "22px", fontWeight: 900, color: "white", letterSpacing: "-0.3px" }}>
               hotstar
             </span>
           </div>
-          {}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 24px", marginBottom: "24px" }}>
             {footerLinks.map(link => (
               <a
@@ -68,9 +65,7 @@ function Footer() {
             {t("copyright")}
           </p>
         </div>
-        {}
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-          {}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
               {t("connect")}
@@ -101,7 +96,6 @@ function Footer() {
               </a>
             ))}
           </div>
-          {}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
               {t("download")}
