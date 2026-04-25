@@ -15,13 +15,19 @@ function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [language, setLanguage] = useState("English");
   const searchRef = useRef(null);
+  const langRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
     const handleClickOutside = (e) => {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
         setSearchOpen(false);
+      }
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -193,23 +199,81 @@ function Header() {
         </div>
 
         {/* Language (Hidden on mobile) */}
-        <div
-          className="hidden md:flex"
-          style={{
-            fontSize: "12px",
-            fontWeight: 700,
-            color: "#aaaaaa",
-            cursor: "pointer",
-            textTransform: "uppercase",
-            letterSpacing: "0.06em",
-            alignItems: "center",
-            gap: "4px",
-            transition: "color 0.2s",
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-          onMouseLeave={e => (e.currentTarget.style.color = "#aaa")}
-        >
-          English <span style={{ fontSize: "9px", opacity: 0.6 }}>▼</span>
+        <div ref={langRef} style={{ position: "relative" }} className="hidden md:block">
+          <div
+            onClick={() => setLangOpen(!langOpen)}
+            style={{
+              fontSize: "12px",
+              fontWeight: 700,
+              color: "#aaaaaa",
+              cursor: "pointer",
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              transition: "color 0.2s",
+              padding: "4px 0",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+            onMouseLeave={e => (e.currentTarget.style.color = langOpen ? "#fff" : "#aaa")}
+          >
+            {language} 
+            <span style={{ 
+              fontSize: "10px", 
+              opacity: 0.8,
+              transform: langOpen ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.2s ease"
+            }}>
+              ▼
+            </span>
+          </div>
+
+          {/* Language Dropdown */}
+          {langOpen && (
+            <div
+              style={{
+                position: "absolute",
+                top: "calc(100% + 14px)",
+                right: "-20px",
+                width: "140px",
+                background: isDarkMode ? "#1a0533" : "#ffffff",
+                border: isDarkMode ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
+                borderRadius: "12px",
+                overflow: "hidden",
+                boxShadow: isDarkMode ? "0 20px 60px rgba(0,0,0,0.7)" : "0 10px 30px rgba(0,0,0,0.1)",
+                zIndex: 2000,
+                animation: "fadeIn 0.2s ease",
+              }}
+            >
+              {["English", "Hindi", "Tamil", "Telugu"].map(lang => (
+                <div
+                  key={lang}
+                  onClick={() => {
+                    setLanguage(lang);
+                    setLangOpen(false);
+                  }}
+                  style={{
+                    padding: "12px 16px",
+                    color: isDarkMode ? "white" : "#000",
+                    fontSize: "13px",
+                    fontWeight: language === lang ? 800 : 500,
+                    cursor: "pointer",
+                    borderBottom: isDarkMode ? "1px solid rgba(255,255,255,0.05)" : "1px solid rgba(0,0,0,0.05)",
+                    transition: "background 0.2s",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.background = isDarkMode ? "rgba(139,47,201,0.2)" : "rgba(139,47,201,0.1)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                >
+                  {lang}
+                  {language === lang && <span style={{ color: "#8B2FC9", fontSize: "14px" }}>✓</span>}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Theme Toggle */}
