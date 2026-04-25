@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -9,7 +10,16 @@ import { movies, sports } from "../data/movies";
 const allContent = [...movies, ...sports];
 
 function Search() {
-  const { searchQuery } = useAppContext();
+  const { searchQuery, setSearchQuery } = useAppContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  // Sync global search query with URL param when URL changes
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q !== null && q !== searchQuery) {
+      setSearchQuery(q);
+    }
+  }, [searchParams, setSearchQuery]);
 
   // Filter based on search query
   const results = searchQuery

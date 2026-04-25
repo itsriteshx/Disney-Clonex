@@ -147,8 +147,8 @@ function Header() {
                 value={searchQuery}
                 onChange={e => {
                   setSearchQuery(e.target.value);
-                  if (e.target.value && window.location.hash !== "#/search") {
-                    navigate("/search");
+                  if (e.target.value) {
+                    navigate(`/search?q=${encodeURIComponent(e.target.value)}`);
                   }
                 }}
                 style={{
