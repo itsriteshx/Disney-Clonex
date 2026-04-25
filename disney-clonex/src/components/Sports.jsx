@@ -1,7 +1,7 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import MovieRow from "../components/MovieRow";
-import Modals from "../components/GlobalModal";
+import Header from "./Header";
+import Footer from "./Footer";
+import MovieRow from "./MovieRow";
+import Modals from "./GlobalModal";
 
 function Sports() {
   return (

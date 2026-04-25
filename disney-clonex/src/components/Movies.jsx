@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import ImageSlider from "../components/ImageSlider";
-import MovieRow from "../components/MovieRow";
-import Footer from "../components/Footer";
-import Modals from "../components/GlobalModal";
+import Header from "./Header";
+import ImageSlider from "./ImageSlider";
+import MovieRow from "./MovieRow";
+import Footer from "./Footer";
+import Modals from "./GlobalModal";
 import { useAppContext } from "../context/AppContext";
 import { movies } from "../data/movies";
 

@@ -82,7 +82,10 @@ function Login() {
           </div>
 
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => {
+              localStorage.setItem("user", JSON.stringify({ loggedIn: true, username: "User" }));
+              navigate("/home");
+            }}
             style={{
               width: "100%",
               padding: "14px",

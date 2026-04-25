@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Modals from "../components/GlobalModal";
+import Header from "./Header";
+import Footer from "./Footer";
+import Modals from "./GlobalModal";
 import { HiCheck } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
 

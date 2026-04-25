@@ -1,7 +1,7 @@
-import Header from "../components/Header";
-import MovieCard from "../components/MovieCard";
-import Footer from "../components/Footer";
-import Modals from "../components/GlobalModal";
+import Header from "./Header";
+import MovieCard from "./MovieCard";
+import Footer from "./Footer";
+import Modals from "./GlobalModal";
 import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";

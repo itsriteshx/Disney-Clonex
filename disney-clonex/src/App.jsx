@@ -1,13 +1,13 @@
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Movies from "./pages/Movies";
-import TV from "./pages/TV";
-import Detail from "./pages/Detail";
-import Watchlist from "./pages/Watchlist";
-import Premium from "./pages/Premium";
-import Sports from "./pages/Sports";
-import Search from "./pages/Search";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Movies from "./components/Movies";
+import TV from "./components/TV";
+import Detail from "./components/Detail";
+import Watchlist from "./components/Watchlist";
+import Premium from "./components/Premium";
+import Sports from "./components/Sports";
+import Search from "./components/Search";
 import { AppProvider } from "./context/AppContext";
 import { ThemeProvider } from "./context/ThemeContext";
 
