@@ -8,7 +8,7 @@ import { SkeletonHero, SkeletonCard } from "./Skeleton";
 import { useAppContext } from "../context/AppContext";
 
 function Home() {
-  const { searchQuery } = useAppContext();
+  const { searchQuery, t } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
   // Simulate network delay for skeleton loading
@@ -27,11 +27,11 @@ function Home() {
         {isLoading ? (
           <div className="pt-20">
             <SkeletonHero />
-            <div className="px-10 mt-8 mb-6 text-xl font-bold">🔴 Live & Upcoming</div>
+            <div className="px-10 mt-8 mb-6 text-xl font-bold">{t("liveUpcoming")}</div>
             <div className="px-10 flex gap-4 overflow-hidden mb-12">
               {[1, 2, 3, 4, 5, 6].map((i) => <SkeletonCard key={i} />)}
             </div>
-            <div className="px-10 mb-6 text-xl font-bold">🎬 Featured Today</div>
+            <div className="px-10 mb-6 text-xl font-bold">{t("featuredToday")}</div>
             <div className="px-10 flex gap-4 overflow-hidden">
               {[1, 2, 3, 4, 5, 6].map((i) => <SkeletonCard key={i} />)}
             </div>
@@ -42,25 +42,25 @@ function Home() {
 
             <div style={{ paddingTop: "20px" }}>
               {/* 🔴 Live & Upcoming */}
-              <MovieRow title="🔴 Live & Upcoming" type="sports" />
+              <MovieRow title={t("liveUpcoming")} type="sports" />
 
               {/* 🎬 Featured Today */}
-              <MovieRow title="🎬 Featured Today" type="movie" filterBrand="marvel" />
+              <MovieRow title={t("featuredToday")} type="movie" filterBrand="marvel" />
 
               {/* ⭐ Hotstar Specials */}
-              <MovieRow title="⭐ Hotstar Specials" filterBrand="hotstar" />
+              <MovieRow title={t("hotstarSpecials")} filterBrand="hotstar" />
 
               {/* 🎯 Top Picks For You */}
-              <MovieRow title="🎯 Top Picks For You" type="movie" />
+              <MovieRow title={t("topPicks")} type="movie" />
 
               {/* 🎥 Bollywood Hits */}
-              <MovieRow title="🎥 Bollywood Hits" filterBrand="bollywood" />
+              <MovieRow title={t("bollywoodHits")} filterBrand="bollywood" />
 
               {/* 🏆 Sports */}
-              <MovieRow title="🏆 Sports" type="sports" />
+              <MovieRow title={t("sports")} type="sports" />
 
               {/* 🌍 International */}
-              <MovieRow title="🌍 International" filterBrand="international" />
+              <MovieRow title={t("international")} filterBrand="international" />
             </div>
           </>
         )}

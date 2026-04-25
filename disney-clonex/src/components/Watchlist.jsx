@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 
 function Profile() {
-  const { watchlist } = useAppContext();
+  const { watchlist, t } = useAppContext();
   const navigate = useNavigate();
 
   return (
@@ -30,16 +30,16 @@ function Profile() {
             </div>
             <div>
               <h1 style={{ fontSize: "32px", fontWeight: 900, margin: "0 0 4px", letterSpacing: "-0.5px" }}>
-                My Space
+                {t("mySpace")}
               </h1>
-              <p style={{ color: "#aaa", fontSize: "14px", margin: 0 }}>Manage your watchlist and preferences</p>
+              <p style={{ color: "#aaa", fontSize: "14px", margin: 0 }}>{t("manageWatchlist")}</p>
             </div>
           </div>
 
           {/* Watchlist */}
           <section>
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
-              <h2 style={{ fontSize: "22px", fontWeight: 800, margin: 0 }}>My Watchlist</h2>
+              <h2 style={{ fontSize: "22px", fontWeight: 800, margin: 0 }}>{t("myWatchlist")}</h2>
               <span style={{
                 background: "linear-gradient(135deg, #8B2FC9, #6a1fa0)",
                 color: "white", padding: "2px 12px", borderRadius: "999px",
@@ -66,9 +66,9 @@ function Profile() {
                 textAlign: "center",
               }}>
                 <AiFillStar style={{ color: "#f5a623", fontSize: "48px", marginBottom: "16px" }} />
-                <h3 style={{ fontSize: "22px", fontWeight: 800, marginBottom: "10px" }}>Your watchlist is empty</h3>
+                <h3 style={{ fontSize: "22px", fontWeight: 800, marginBottom: "10px" }}>{t("watchlistEmpty")}</h3>
                 <p style={{ color: "#aaa", fontSize: "14px", marginBottom: "28px" }}>
-                  Add movies and shows to keep track of what you want to watch.
+                  {t("watchlistEmptyDesc")}
                 </p>
                 <button
                   onClick={() => navigate("/home")}
@@ -82,7 +82,7 @@ function Profile() {
                   onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.05)")}
                   onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
                 >
-                  DISCOVER CONTENT
+                  {t("discoverContent")}
                 </button>
               </div>
             )}

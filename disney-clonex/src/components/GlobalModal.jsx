@@ -9,7 +9,7 @@ const PLANS = [
 ];
 
 function PlansModal() {
-  const { showPlansModal, setShowPlansModal } = useAppContext();
+  const { showPlansModal, setShowPlansModal, t } = useAppContext();
   if (!showPlansModal) return null;
 
   return (
@@ -49,10 +49,10 @@ function PlansModal() {
         </button>
 
         <h2 style={{ textAlign: "center", fontSize: "28px", fontWeight: 900, marginBottom: "8px", color: "white" }}>
-          Subscribe to Hotstar
+          {t("subscribeToHotstar")}
         </h2>
         <p style={{ textAlign: "center", color: "#aaa", marginBottom: "36px", fontSize: "15px" }}>
-          Choose the plan that's right for you
+          {t("choosePlan")}
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
@@ -79,7 +79,7 @@ function PlansModal() {
                   color: "white", fontSize: "10px", fontWeight: 900,
                   padding: "3px 14px", borderRadius: "999px", letterSpacing: "0.06em",
                 }}>
-                  BEST EXPERIENCE
+                  {t("bestExperience")}
                 </span>
               )}
               <h3 style={{ color: "white", fontSize: "20px", fontWeight: 800, marginBottom: "6px" }}>{plan.name}</h3>
@@ -103,7 +103,7 @@ function PlansModal() {
                 onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
                 onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
               >
-                SELECT {plan.name.toUpperCase()}
+                {t("select")} {plan.name.toUpperCase()}
               </button>
             </div>
           ))}
@@ -114,7 +114,7 @@ function PlansModal() {
 }
 
 function GlobalModal() {
-  const { modalState, closeModal, toggleWatchlist, watchlist, openModal } = useAppContext();
+  const { modalState, closeModal, toggleWatchlist, watchlist, openModal, t } = useAppContext();
   const { isOpen, movie, type } = modalState;
 
   if (!isOpen || !movie) return null;
@@ -267,7 +267,7 @@ function GlobalModal() {
                   onMouseEnter={e => (e.currentTarget.style.background = "#e8e8e8")}
                   onMouseLeave={e => (e.currentTarget.style.background = "white")}
                 >
-                  <HiPlay style={{ fontSize: "20px" }} /> Watch Now
+                  <HiPlay style={{ fontSize: "20px" }} /> {t("watchNow")}
                 </button>
                 <button
                   onClick={() => toggleWatchlist(movie)}
@@ -279,7 +279,7 @@ function GlobalModal() {
                     display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: "22px", transition: "all 0.2s",
                   }}
-                  title="Add to Watchlist"
+                  title={t("addToWatchlist")}
                   onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
                   onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
                 >

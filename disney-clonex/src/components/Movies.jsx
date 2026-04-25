@@ -12,11 +12,11 @@ const GENRES = ["All", "Action", "Comedy", "Drama", "Horror", "Sci-Fi"];
 function Movies() {
   const [loading, setLoading] = useState(true);
   const [activeGenre, setActiveGenre] = useState("All");
-  const { searchQuery } = useAppContext();
+  const { searchQuery, t } = useAppContext();
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 600);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
   }, []);
 
   const filtered = activeGenre === "All"
@@ -62,16 +62,16 @@ function Movies() {
           </div>
         ) : (
           searchQuery ? (
-            <MovieRow title={`Results for "${searchQuery}"`} />
+            <MovieRow title={t("resultsFor", { query: searchQuery })} />
           ) : activeGenre === "All" ? (
             <>
-              <MovieRow title="New Releases" type="movie" />
-              <MovieRow title="Blockbuster Action" filterBrand="marvel" />
-              <MovieRow title="International Movies" filterBrand="international" />
+              <MovieRow title={t("newReleases")} type="movie" />
+              <MovieRow title={t("blockbusterAction")} filterBrand="marvel" />
+              <MovieRow title={t("internationalMovies")} filterBrand="international" />
             </>
           ) : (
             <MovieRow
-              title={`${activeGenre} Movies`}
+              title={t("genreMovies", { genre: activeGenre })}
               movies={filtered}
             />
           )

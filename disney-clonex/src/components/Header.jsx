@@ -9,14 +9,13 @@ import { movies, sports } from "../data/movies";
 const allContent = [...movies, ...sports];
 
 function Header() {
-  const { searchQuery, setSearchQuery, openModal, setShowPlansModal } = useAppContext();
+  const { searchQuery, setSearchQuery, openModal, setShowPlansModal, language, setLanguage, t } = useAppContext();
   const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [language, setLanguage] = useState("English");
   const searchRef = useRef(null);
   const langRef = useRef(null);
 
@@ -39,11 +38,11 @@ function Header() {
   }, []);
 
   const navItems = [
-    { title: "Home",    path: "/home" },
-    { title: "TV",      path: "/tv" },
-    { title: "Movies",  path: "/movies" },
-    { title: "Sports",  path: "/sports" },
-    { title: "Premium", path: "/premium" },
+    { title: t("home"),    path: "/home" },
+    { title: t("tv"),      path: "/tv" },
+    { title: t("movies"),  path: "/movies" },
+    { title: t("sports"),  path: "/sports" },
+    { title: t("premium"), path: "/premium" },
   ];
 
   const searchResults = searchQuery
@@ -116,7 +115,7 @@ function Header() {
         <nav className="hidden md:flex" style={{ gap: "28px", marginLeft: "20px" }}>
           {navItems.map(item => (
             <NavLink
-              key={item.title}
+              key={item.path}
               to={item.path}
               style={({ isActive }) => ({
                 fontSize: "13px",
@@ -149,7 +148,7 @@ function Header() {
               <input
                 autoFocus
                 type="text"
-                placeholder="Search movies, shows..."
+                placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={e => {
                   setSearchQuery(e.target.value);
@@ -246,7 +245,7 @@ function Header() {
                 animation: "fadeIn 0.2s ease",
               }}
             >
-              {["English", "Hindi", "Tamil", "Telugu"].map(lang => (
+              {["English", "Hindi"].map(lang => (
                 <div
                   key={lang}
                   onClick={() => {
@@ -302,7 +301,7 @@ function Header() {
           className="subscribe-btn hidden md:block"
           onClick={() => setShowPlansModal && setShowPlansModal(true)}
         >
-          SUBSCRIBE
+          {t("subscribe")}
         </button>
 
         {/* Watchlist Avatar */}
@@ -328,7 +327,7 @@ function Header() {
           onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.1)")}
           onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
         >
-          WL
+          {t("watchlist").substring(0, 2).toUpperCase()}
         </Link>
       </div>
 
@@ -362,7 +361,7 @@ function Header() {
         <nav style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           {navItems.map((link) => (
             <NavLink
-              key={link.name || link.title}
+              key={link.path}
               to={link.path}
               onClick={() => setMobileMenuOpen(false)}
               style={({ isActive }) => ({
@@ -374,7 +373,7 @@ function Header() {
                 fontSize: "18px"
               })}
             >
-              {link.name || link.title}
+              {link.title}
             </NavLink>
           ))}
           <NavLink
@@ -389,7 +388,7 @@ function Header() {
               fontSize: "18px"
             })}
           >
-            Watchlist
+            {t("watchlist")}
           </NavLink>
         </nav>
         
@@ -401,7 +400,7 @@ function Header() {
             if (setShowPlansModal) setShowPlansModal(true);
           }}
         >
-          SUBSCRIBE NOW
+          {t("subscribeNow")}
         </button>
       </div>
 

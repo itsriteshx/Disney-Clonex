@@ -10,7 +10,7 @@ import { movies, sports } from "../data/movies";
 const allContent = [...movies, ...sports];
 
 function Search() {
-  const { searchQuery, setSearchQuery } = useAppContext();
+  const { searchQuery, setSearchQuery, t } = useAppContext();
   const [searchParams, setSearchParams] = useSearchParams();
   
   // Sync global search query with URL param when URL changes
@@ -36,7 +36,7 @@ function Search() {
         {searchQuery ? (
           <>
             <h1 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "24px" }}>
-              Results for "{searchQuery}"
+              {t("resultsFor", { query: searchQuery })}
             </h1>
             
             {results.length > 0 ? (
@@ -53,13 +53,13 @@ function Search() {
               </div>
             ) : (
               <div style={{ textAlign: "center", padding: "60px 0", color: "#888", fontSize: "18px" }}>
-                No results found for "{searchQuery}". Try a different term.
+                {t("noResults", { query: searchQuery })}
               </div>
             )}
           </>
         ) : (
           <div style={{ textAlign: "center", padding: "60px 0", color: "#888", fontSize: "18px" }}>
-            Start typing in the search bar above to find movies and shows!
+            {t("startTyping")}
           </div>
         )}
       </main>

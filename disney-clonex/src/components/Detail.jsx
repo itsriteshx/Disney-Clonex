@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import Modals from "./GlobalModal";
+import { useAppContext } from "../context/AppContext";
 import { movies, sports } from "../data/movies";
 import { HiPlay, HiArrowLeft } from "react-icons/hi2";
 import { AiFillStar } from "react-icons/ai";
@@ -11,15 +12,16 @@ const allContent = [...movies, ...sports];
 function Detail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useAppContext();
   const movie = allContent.find(m => String(m.id) === id);
 
   if (!movie) {
     return (
       <div style={{ background: "#0d0117", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "20px" }}>
         <Header />
-        <h2 style={{ color: "white", fontSize: "24px" }}>Content not found</h2>
+        <h2 style={{ color: "white", fontSize: "24px" }}>{t("contentNotFound")}</h2>
         <button onClick={() => navigate("/home")} style={{ color: "#8B2FC9", background: "none", border: "none", cursor: "pointer", fontSize: "16px" }}>
-          ← Go Home
+          ← {t("goHome")}
         </button>
       </div>
     );
@@ -53,7 +55,7 @@ function Detail() {
           onMouseEnter={e => (e.currentTarget.style.color = "white")}
           onMouseLeave={e => (e.currentTarget.style.color = "#aaa")}
         >
-          <HiArrowLeft /> Back
+          <HiArrowLeft /> {t("back")}
         </button>
 
         <div style={{ maxWidth: "600px" }} className="animate-fade-in">
@@ -83,7 +85,7 @@ function Detail() {
               onMouseEnter={e => (e.currentTarget.style.background = "#e8e8e8")}
               onMouseLeave={e => (e.currentTarget.style.background = "white")}
             >
-              <HiPlay style={{ fontSize: "22px" }} /> Watch Now
+              <HiPlay style={{ fontSize: "22px" }} /> {t("watchNow")}
             </button>
           </div>
         </div>

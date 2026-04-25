@@ -1,5 +1,6 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
+import { useAppContext } from "../context/AppContext";
 
 const socialIcons = [
   { icon: <FaFacebookF />, href: "#" },
@@ -8,11 +9,18 @@ const socialIcons = [
   { icon: <FaYoutube />,   href: "#" },
 ];
 
-const footerLinks = [
-  "About Hotstar", "Terms Of Use", "Privacy Policy", "FAQ", "Feedback", "Careers",
-];
-
 function Footer() {
+  const { t } = useAppContext();
+  
+  const footerLinks = [
+    { key: "aboutHotstar", label: t("aboutHotstar") },
+    { key: "termsOfUse",   label: t("termsOfUse") },
+    { key: "privacyPolicy", label: t("privacyPolicy") },
+    { key: "faq",           label: t("faq") },
+    { key: "feedback",      label: t("feedback") },
+    { key: "careers",       label: t("careers") },
+  ];
+
   return (
     <footer
       style={{
@@ -45,7 +53,7 @@ function Footer() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 24px", marginBottom: "24px" }}>
             {footerLinks.map(link => (
               <a
-                key={link}
+                key={link.key}
                 href="#"
                 style={{
                   color: "#aaaaaa",
@@ -57,14 +65,13 @@ function Footer() {
                 onMouseEnter={e => (e.currentTarget.style.color = "#ffffff")}
                 onMouseLeave={e => (e.currentTarget.style.color = "#aaaaaa")}
               >
-                {link}
+                {link.label}
               </a>
             ))}
           </div>
 
           <p style={{ color: "#555", fontSize: "11px", lineHeight: 1.8, maxWidth: "520px" }}>
-            © 2025 Hotstar. All Rights Reserved. Content available on Hotstar is subject to
-            licensing. Hotstar is a brand of Star India Pvt. Ltd. All rights reserved.
+            {t("copyright")}
           </p>
         </div>
 
@@ -73,7 +80,7 @@ function Footer() {
           {/* Social */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
-              Connect
+              {t("connect")}
             </span>
             {socialIcons.map(({ icon, href }, i) => (
               <a
@@ -105,7 +112,7 @@ function Footer() {
           {/* App badges */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <span style={{ color: "white", fontSize: "12px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.06em", marginRight: "4px" }}>
-              Download
+              {t("download")}
             </span>
             <a href="#">
               <img

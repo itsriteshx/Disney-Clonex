@@ -1,11 +1,10 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import MovieRow from "./MovieRow";
-import Modals from "./GlobalModal";
-import { useAppContext } from "../context/AppContext";
+import React from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import MovieRow from "../components/MovieRow";
+import Modals from "../components/GlobalModal";
 
 function Sports() {
-  const { t } = useAppContext();
   return (
     <div style={{ background: "#0d0117", minHeight: "100vh", color: "white" }} className="page-transition">
       <Header />
@@ -50,11 +49,11 @@ function Sports() {
             }}
           >
             <div className="animate-fade-in">
-              {/* LIVE badge */}
+              
               <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
                 <div className="live-badge">
                   <span className="live-dot" />
-                  {t("live")}
+                  LIVE
                 </div>
                 <span style={{ color: "#aaa", fontWeight: 600, fontSize: "14px" }}>
                   Border-Gavaskar Trophy
@@ -74,7 +73,7 @@ function Sports() {
                 India vs Australia
               </h1>
 
-              {/* Score */}
+             
               <div
                 style={{
                   display: "flex",
@@ -102,11 +101,11 @@ function Sports() {
                   onMouseEnter={e => (e.currentTarget.style.background = "#e8e8e8")}
                   onMouseLeave={e => (e.currentTarget.style.background = "white")}
                 >
-                  {t("watchLive")}
+                  WATCH LIVE
                 </button>
                 <div>
                   <div style={{ color: "#aaa", fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                    {t("nextMatch")}
+                    Next Match
                   </div>
                   <div style={{ color: "white", fontWeight: 900, fontSize: "20px", letterSpacing: "2px" }}>
                     02 : 14 : 55
@@ -119,9 +118,9 @@ function Sports() {
 
         {/* Content Rows */}
         <div style={{ paddingBottom: "40px" }}>
-          <MovieRow title={t("cricket")} type="sports" />
-          <MovieRow title={t("football")} type="sports" />
-          <MovieRow title={t("kabaddi")} type="sports" />
+          <MovieRow title="🏏 Cricket" type="sports" />
+          <MovieRow title="⚽ Football" type="sports" />
+          <MovieRow title="🤼 Kabaddi" type="sports" />
         </div>
 
         <Footer />

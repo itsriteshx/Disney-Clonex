@@ -8,11 +8,11 @@ import { useAppContext } from "../context/AppContext";
 
 function TV() {
   const [loading, setLoading] = useState(true);
-  const { searchQuery } = useAppContext();
+  const { searchQuery, t } = useAppContext();
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 600);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -37,13 +37,13 @@ function TV() {
           </div>
         ) : (
           searchQuery ? (
-            <MovieRow title={`Results for "${searchQuery}"`} />
+            <MovieRow title={t("resultsFor", { query: searchQuery })} />
           ) : (
             <>
-              <MovieRow title="Popular Shows" type="tv" />
-              <MovieRow title="Hotstar Specials" filterBrand="hotstar" />
-              <MovieRow title="Drama Series" type="tv" />
-              <MovieRow title="Reality &amp; Comedy" type="tv" />
+              <MovieRow title={t("popularShows")} type="tv" />
+              <MovieRow title={t("hotstarSpecials")} filterBrand="hotstar" />
+              <MovieRow title={t("dramaSeries")} type="tv" />
+              <MovieRow title={t("realityComedy")} type="tv" />
             </>
           )
         )}
